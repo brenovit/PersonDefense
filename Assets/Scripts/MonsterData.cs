@@ -6,10 +6,11 @@ using System.Collections.Generic;										//usar lista
 public class MonsterLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
 	public int cost;													//custo do monstro
 	public GameObject visualizacao;										//aparencia
+	public GameObject bullet;
+	public float fireRate;
 }
 
 public class MonsterData : MonoBehaviour {								//classe de dados do monstro
-
 	public List<MonsterLevel> levels;									//cria uma lista para os levels dos monstros
 	private MonsterLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
