@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		originalScale = gameObject.transform.localScale.x;
+		originalScale = gameObject.transform.localScale.x;			//o tamanho original da vida vai ser igual a scale local do objeto definido no editor
 	}
 	
 	// Update is called once per frame
