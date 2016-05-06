@@ -5,9 +5,9 @@ using System.Collections.Generic;										//usar lista
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
 public class MonsterLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
 	public int cost;													//custo do monstro
-	public GameObject visualizacao;										//aparencia
-	public GameObject bullet;
-	public float fireRate;
+	public GameObject visualizacao;										//aparencia do monstro
+	public GameObject bullet;											//bala que o monstro vai atirar
+	public float fireRate;												//cadencia de tiro
 }
 
 public class MonsterData : MonoBehaviour {								//classe de dados do monstro
@@ -22,7 +22,8 @@ public class MonsterData : MonoBehaviour {								//classe de dados do monstro
 			currentLevel = value;										//definir um valor para o level atual
 			int currentLevelIndex = levels.IndexOf (currentLevel);		//variavel que vai receber o valor do indice do level atual do monstro
 
-			GameObject levelVizualizationn = levels [currentLevelIndex].visualizacao;	//este gameobject vai receber a aparencia que esta definida no atributo da classe de levels do monstro
+			GameObject levelVizualizationn = 							//este gameobject vai ter sua aparecia alterada pela
+							levels [currentLevelIndex].visualizacao;	//a aparencia que esta definida no atributo da classe de levels do monstro
 			for(int i = 0; i < levels.Count; i++){						//laço que vai até o ultimo level definido (item da lista)
 				if(levelVizualizationn != null) {						//se o gameobject de aparece não estiver vazio
 					if(i == currentLevelIndex){							//se o valor da volta do laço 'i' for igual ao indice do level atual do monstro

@@ -32,7 +32,8 @@ public class SpawnEnemy : MonoBehaviour {
 			enemiesSpawned < waves[currentWave].maxEnemies){			//a quantidade de inimigos spawned dor menor do que a quantidade maxima de inimigos que tem de ser spawnada na onda atual
 
 				lastSpawnTime = Time.time;									//o tempo do utlimo spawn recebe um sistema de tempo em segundos.
-				GameObject newEnemy = (GameObject)Instantiate (waves [currentWave].enemyPrefab);	//Cria-se um novo game object recebendo a instancia  do prefab de inimigo definido na onda.
+				GameObject newEnemy = 
+				(GameObject)Instantiate (waves [currentWave].enemyPrefab);	//Cria-se um novo game object recebendo a instancia  do prefab de inimigo definido na onda.
 				newEnemy.GetComponent<MoveEnemy>().waypoints = waypoints;	//este gameobject vai preencher seu vetor de wayspoints com os waispoints definidos nesta classe.
 				enemiesSpawned++;											//a quantidade de inimigos spawnados auamenta
 			}
