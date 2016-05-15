@@ -13,6 +13,7 @@ public class SpawnEnemy : MonoBehaviour {
 
 	public GameObject[] waypoints;				//vetor que vai conter todos os wayspoints do mapa
 	//public GameObject testEnemy;				
+	public bool	iniciouGame = false;
 
 	void Start () {
 		//Instantiate (testEnemy).GetComponent<MoveEnemy>().waypoints = waypoints;
@@ -22,6 +23,11 @@ public class SpawnEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (iniciouGame)
+			StartSpawn ();
+	}
+
+	private void StartSpawn(){
 		int currentWave = gameManager.Wave;								//vai receber o numero da onda atual
 		if(currentWave < waves.Length){									//verifica se o numero da onda atual é menor do que o tamanho total de ondas
 			float timeInterval = Time.time - lastSpawnTime;				//variavel que vai receber um valor em segundos e subtrair este valor pelo tempo do ultimo spawn.
@@ -49,5 +55,9 @@ public class SpawnEnemy : MonoBehaviour {
 			GameObject gameOverText = GameObject.FindGameObjectWithTag ("GameWon");		//procura o objeto com a tag GamoWon
 			gameOverText.GetComponent<Animator> ().SetBool ("gameOver",true);			//inicia a animação do texto de game over
 		}
+	}
+
+	public void StartWave(){
+		iniciouGame = true;
 	}
 }
