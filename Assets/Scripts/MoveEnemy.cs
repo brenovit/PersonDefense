@@ -6,10 +6,17 @@ public class MoveEnemy : MonoBehaviour {
 	public GameObject[] waypoints;			//armazena uma copia dos waypoints em um array
 	private int currentWaypoint = 0;		//armazena o waypoint que o inimigo estiver passando
 	private float lastWaypointSwitchTime;	//armazena o tempo que o inimigo passou por esse waypoint
-	public float speed = 1.0f;				//velocidade do inimigo
+	private float speed = 0;				//velocidade do inimigo
+
+	public float Speed{
+		get {return speed;}
+		set {speed = value;}
+	}
 
 	void Start () {
 		lastWaypointSwitchTime = Time.time;		//define que esta variavel vai recerbe um tempo.
+		if (speed == 0)
+			speed = 2;
 	}
 
 	void Update () {

@@ -28,18 +28,8 @@ public class BulletBehavior : MonoBehaviour {
 			timeInterval * speed / distance);							//que neste caso traduz o intervalo que a bala sai, vezes a velocidade dividido pela distancia
 		if (gameObject.transform.position.Equals(targetPosition)) {		//se a posição da bala for igual a posição do inimigo
 			if (target != null) {										//se o alvo não for nulo
-				Transform healthBarTransform = 							//cria-se uma variavel que vai alterar a vida do inimigo
-					target.transform.FindChild("HealthBar");			//recebendo o filho de algum objeto na hierarchy com o nome de "HealthBar"
-				HealthBar healthBar = 									//Criase uma variavel do tipo HealthBar
-					healthBarTransform.gameObject.GetComponent<HealthBar>();	//recebendo o componente healthbar presente na vairavel anterior
-				healthBar.currentHealth -= Mathf.Max(damage, 0);		//por fim a vida atual do inimigo vai ser reduzida de acordo com uma variação partindo de zero até o dano causado pela bala; 
-				if (healthBar.currentHealth <= 0) {						//se a vida do inimigo for menor ou igual a zero
-					Destroy(target);									//ele é destruido
-					AudioSource audioSource = target.GetComponent<AudioSource>();		//um som que esta presente no inimgio
-					AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);	//é tocado
-					
-					gameManager.Gold += 50;								//o dinheiro do player aumenta em 50
-				}
+				Mosquito inimigo = target.GetComponent<Mosquito> ();	//Cria-se um variavel do tipo mosquito recebendo o compoente Mosquito do alvo 
+				inimigo.RecebeuDano (damage);							//essa variavel chama o metodo recebeuDano
 			}
 			Destroy(gameObject);										//por fim detroi-se a bala
 		}	

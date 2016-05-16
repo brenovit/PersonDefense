@@ -36,8 +36,8 @@ public class ShootEnemies : MonoBehaviour {
 				gameObject.transform.position - target.transform.position;		//recebendo a posição atual do monstro menos a posição do inimigo
 			gameObject.transform.rotation = Quaternion.AngleAxis (				//este mosntro vai rotacionar 
 				Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,		//de acordo com a tangente da posição x e y da bala vezes 180 dividido por PI em graus graus 
-				new Vector3 (0, 0, 1));											//em um ponto fixo
-			}
+				new Vector3 (0, 0, 1)); 										//em um ponto fixo
+		}
 	}
 
 	void OnEnemyDestroy(GameObject enemy){										//este método remove um objeto da lista
@@ -77,13 +77,12 @@ public class ShootEnemies : MonoBehaviour {
 		bulletComp.startPosition = startPosition;								//em seu atributo de posição inicial vai receber a variavel startPosition
 		bulletComp.targetPosition = targetPosition;								//e em seu atributo de posição do alvo vai receber a variavel targetPosition
 		
-		//por fim executa uma animação que represento o mosntro atirando
+		//por fim executa uma animação que representa o monstro atirando
 		Animator animator = 
 			monsterData.CurrentLevel.visualizacao.GetComponent <Animator> ();
 		animator.SetTrigger ("fireShot");
 		//e toca um som
 		AudioSource audioSource = gameObject.GetComponent<AudioSource> ();
 		audioSource.PlayOneShot (audioSource.clip);
-
 	}
 }
