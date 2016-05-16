@@ -24,9 +24,9 @@ public class MoveEnemy : MonoBehaviour {
 
 		if(gameObject.transform.position.Equals (endPosition)){								//se a posição atual do inimigo for igual a ultima posição do waypoint
 			if (currentWaypoint < waypoints.Length - 2){									//verifica se o waypoint atual é menor que a qauntidade de wayspoints -2
+				NovaRotacao ();
 				currentWaypoint++;															//se for verdade a posição do waypoint atual é incrementada
 				lastWaypointSwitchTime = Time.time;											//o tempo do ultimo way point é alterado de acordo com o tempo atual
-				RotateIntoMoveDirection ();
 			} else {																		//se não for
 				Destroy (gameObject);														//destroi o game object
 				AudioSource audioSource = gameObject.GetComponent <AudioSource> ();			//toca um som
@@ -37,7 +37,27 @@ public class MoveEnemy : MonoBehaviour {
 		}
 	}
 
-	private void RotateIntoMoveDirection(){
+	private void NovaRotacao(){
+		GameObject sprite = (GameObject) gameObject.transform.Find ("Sprite").gameObject; //pega o filho do gameobject do inimigo, com o nome de sprite
+
+		//Estas Variaveis receberão a Escala da Sprite nos respectivos eixos
+		float inverter = sprite.transform.localScale.x;
+		float y = sprite.transform.localScale.y;
+		float z = sprite.transform.localScale.z;
+
+		//Estas variaveis recebrão a posição no eixo X do waypoint atual e do proximo
+		float currentWaypointX = waypoints[currentWaypoint].transform.position.x;
+		float nextWaypointX = waypoints[currentWaypoint+1].transform.position.x;
+
+		if(nextWaypointX < currentWaypointX){												//se a posição em X do proximo waypoint dor menor do que a posição em X do waypoint atual			
+			inverter *= -1;																	//inverte a escala em x(passando a impressão de estar girando)
+		}else if(nextWaypointX > currentWaypointX){											//se a posição em X do proximo waypoint dor menor do que a posição em X do waypoint atual			
+			inverter *= -1;																	//inverte a escala em x(passando a impressão de estar girando - retornando para a escala original)
+		}
+		sprite.transform.localScale = new Vector3(inverter,y,z);							//altera a escala do Sprite
+	}
+
+	/*private void RotateIntoMoveDirection(){
 		//Esta parte vai calcular a direção de movimentação atual  do inimigo, subtraindo a posição do way point atual pela posição do proximo waypoint
 		Vector3 newStartPosition = waypoints[currentWaypoint].transform.position;
 		Vector3 newEndPosition = waypoints[currentWaypoint+1].transform.position;
@@ -50,7 +70,7 @@ public class MoveEnemy : MonoBehaviour {
 		GameObject sprite = (GameObject) gameObject.transform.FindChild ("Sprite").gameObject;	//pega o filho do gameobject do inimigo, com o nome de sprite
 		sprite.transform.rotation = Quaternion.AngleAxis (rotationAngle, Vector3.forward);		//rotaciona esse game object de acordo com com o angulo definido anteriormente.
 
-	}
+	}*/
 
 	public float distanceToGoal(){											//este método calcula a distancia do inimigo até o final							
 		float distance = 0;													//variavel float que vai receber a distancia
