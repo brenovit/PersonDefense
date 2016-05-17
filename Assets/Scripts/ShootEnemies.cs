@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class ShootEnemies : MonoBehaviour {
 	public float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
-	private MonsterData monsterData;											//este atributo vai receber os dados do monstro(torre)
+	private TowerData towerData;											//este atributo vai receber os dados do monstro(torre)
 
 	public List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
 
 	void Start () {
 		enemiesInRange = new List<GameObject> ();								//instancia a lista
 		lastShotTime = Time.time;												//o atributo de tempo receber o momento exato de inicio
-		monsterData = gameObject.GetComponentInChildren<MonsterData> ();		//o objeto contendo os dados do monstro é instanciado recebendo componente do filho deste gameObject
+		towerData = gameObject.GetComponentInChildren<TowerData> ();		//o objeto contendo os dados do monstro é instanciado recebendo componente do filho deste gameObject
 	}
 
 	void Update(){
@@ -27,7 +27,7 @@ public class ShootEnemies : MonoBehaviour {
 		}
 
 		if(target != null){														//se o alvo não for  nulo
-			if(Time.time - lastShotTime > monsterData.CurrentLevel.fireRate){	//se o tempo atual menos o tmepo do ultimo tiro for menor que a cadencia do monstro
+			if(Time.time - lastShotTime > towerData.CurrentLevel.cadencia){	//se o tempo atual menos o tmepo do ultimo tiro for menor que a cadencia do monstro
 				Shoot (target.GetComponent<Collider2D> ());						//executa o método de atirar, passando o collider do inimigo
 				lastShotTime = Time.time;										//o tempo do ultimo tiro receber o segundo atual
 			}
@@ -63,7 +63,7 @@ public class ShootEnemies : MonoBehaviour {
 	}
 
 	void Shoot (Collider2D target){												//este método vai ser responsavel por atirar no inimigo
-		GameObject bulletPrefab = monsterData.CurrentLevel.bullet;				//variavel que vai receber o prefab da bala
+		GameObject bulletPrefab = towerData.CurrentLevel.bala;				//variavel que vai receber o prefab da bala
 
 		Vector3 startPosition = gameObject.transform.position;					//variavel da posição de inicio recebendo a posição atual do monstro
 		Vector3 targetPosition = target.transform.position;						//variavel da posição do alvo recebendo a posição do alvo
@@ -73,13 +73,14 @@ public class ShootEnemies : MonoBehaviour {
 		GameObject newBullet = (GameObject)Instantiate (bulletPrefab);			//instanciando uma nova bala como um GameObject
 		newBullet.transform.position = startPosition;							//a posição da bala vai ser igual a posição inicial do monstro
 		BulletBehavior bulletComp = newBullet.GetComponent<BulletBehavior> ();	//Cria-se um objeto do tipo comportamento da bala que vai receber a nova bala pegando o componente BulletBehavior
-		bulletComp.target = target.gameObject;									//este objeto de comportamento da bala em seu atributo de alvo vai receber o gameObject target e
-		bulletComp.startPosition = startPosition;								//em seu atributo de posição inicial vai receber a variavel startPosition
-		bulletComp.targetPosition = targetPosition;								//e em seu atributo de posição do alvo vai receber a variavel targetPosition
-		
+		bulletComp.alvo = target.gameObject;									//este objeto de comportamento da bala em seu atributo de alvo vai receber o gameObject target e
+		bulletComp.posicaoInicial = startPosition;								//em seu atributo de posição inicial vai receber a variavel startPosition
+		bulletComp.posicaoAlvo = targetPosition;								//e em seu atributo de posição do alvo vai receber a variavel targetPosition
+		bulletComp.Dano = towerData.CurrentLevel.dano;
+
 		//por fim executa uma animação que representa o monstro atirando
 		Animator animator = 
-			monsterData.CurrentLevel.visualizacao.GetComponent <Animator> ();
+			towerData.CurrentLevel.visualizacao.GetComponent <Animator> ();
 		animator.SetTrigger ("fireShot");
 		//e toca um som
 		AudioSource audioSource = gameObject.GetComponent<AudioSource> ();

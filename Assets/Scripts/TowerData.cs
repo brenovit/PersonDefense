@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;										//usar lista
 
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
-public class MonsterLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
-	public int cost;													//custo do monstro
+public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
+	public int custo;													//custo do monstro
 	public GameObject visualizacao;										//aparencia do monstro
-	public GameObject bullet;											//bala que o monstro vai atirar
-	public float fireRate;												//cadencia de tiro
+	public GameObject bala;											//bala que o monstro vai atirar
+	public float cadencia;												//cadencia de tiro
+	public int dano;
 }
 
-public class MonsterData : MonoBehaviour {								//classe de dados do monstro
-	public List<MonsterLevel> levels;									//cria uma lista para os levels dos monstros
-	private MonsterLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
+public class TowerData : MonoBehaviour {								//classe de dados do monstro
+	public List<TowerLevel> levels;									//cria uma lista para os levels dos monstros
+	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
-	public MonsterLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
+	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
 		get {															//retornar o level
 			return currentLevel;										//retorna o level atual
 		}
@@ -36,7 +37,7 @@ public class MonsterData : MonoBehaviour {								//classe de dados do monstro
 		}
 	}
 
-	public  MonsterLevel getNextLevel(){								//procedimento do tipo do Monsterlevel que vai pegar o level atual do monstro
+	public TowerLevel getNextLevel(){								//procedimento do tipo do Monsterlevel que vai pegar o level atual do monstro
 		int currentLevelIndex = levels.IndexOf (currentLevel);			//variavel do tipo inteiro que vai receber o indice do level atual do monstro
 		int maxLevelIndex = levels.Count - 1;							//variavel que vai definir o level maximo do monstro de acordo com a quantidade especificada no inspetor menos 1
 		if (currentLevelIndex < maxLevelIndex){							//se o level atual for menor que o level maximo
