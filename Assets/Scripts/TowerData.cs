@@ -4,7 +4,7 @@ using System.Collections.Generic;										//usar lista
 
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
 public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
-	public int custo;													//custo do monstro
+	public int tropas;													//custo do monstro
 	public GameObject visualizacao;										//aparencia do monstro
 	public GameObject bala;												//bala que o monstro vai atirar
 	public float cadencia;												//cadencia de tiro
@@ -12,6 +12,7 @@ public class TowerLevel {												//esta clase define que cada mosntro ao ser
 }
 
 public class TowerData : MonoBehaviour {								//classe de dados do monstro
+	public string nome;
 	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
@@ -35,6 +36,11 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 				}
 			}
 		}
+	}
+
+	public int getCurrentLevel(){
+		int currentLevelIndex = levels.IndexOf (currentLevel);
+		return currentLevelIndex;
 	}
 
 	public TowerLevel getNextLevel(){									//procedimento do tipo do Monsterlevel que vai pegar o level atual do monstro

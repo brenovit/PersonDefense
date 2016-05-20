@@ -1,23 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
-    //private bool ativo = false;
     public GameObject panelOpcoes;
     public GameObject panelMenu;
     public GameObject panelSelecao;
 
     public void ChamaCenaFases(string cena){
-         Application.LoadLevel(cena);
+        SceneManager.LoadScene(cena);
     }
 
     public void MeuNumero(int numero)  {
-        /*if (ativo)
-            ativo = false;
-        else
-            ativo = true;*/
-
         switch (numero){                    //selecao == 1    //opcao == 2    //menu == 3
             case 1:
                 panelOpcoes.SetActive(false);
@@ -41,7 +36,6 @@ public class Menu : MonoBehaviour {
     }
 
     public void bt_exit() {
-        //Debug.Log("Você fechou o jogo");
         Application.Quit();
     }
 }

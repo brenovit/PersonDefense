@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
 public class Slot : MonoBehaviour {
 
 	public GameObject torre;
-	public GameObject todosSpots;
+	private TowerSelect towerSelect;
 
+	void Start(){
+		towerSelect = GameObject.Find ("SelectTowerPanel").GetComponent<TowerSelect> ();
+	}
 
 	public void TrocaImagem(GameObject torreImage){
 		torre = torreImage;
@@ -16,12 +18,6 @@ public class Slot : MonoBehaviour {
 	}
 
 	public void SelecionouTorre(){
-		GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
-		for(int i = 0; i < spots.Length; i++){
-			if(spots[i].GetComponent<PlaceMonster>().euChamei){
-				spots [i].GetComponent<PlaceMonster> ().ConstruirTorre (torre);
-				break;
-			}
-		}
+		towerSelect.EscolheuTorre (torre);
 	}
 }
