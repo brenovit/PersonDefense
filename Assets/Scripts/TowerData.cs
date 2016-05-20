@@ -6,13 +6,13 @@ using System.Collections.Generic;										//usar lista
 public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
 	public int custo;													//custo do monstro
 	public GameObject visualizacao;										//aparencia do monstro
-	public GameObject bala;											//bala que o monstro vai atirar
+	public GameObject bala;												//bala que o monstro vai atirar
 	public float cadencia;												//cadencia de tiro
 	public int dano;
 }
 
 public class TowerData : MonoBehaviour {								//classe de dados do monstro
-	public List<TowerLevel> levels;									//cria uma lista para os levels dos monstros
+	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
 	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
@@ -37,7 +37,7 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 		}
 	}
 
-	public TowerLevel getNextLevel(){								//procedimento do tipo do Monsterlevel que vai pegar o level atual do monstro
+	public TowerLevel getNextLevel(){									//procedimento do tipo do Monsterlevel que vai pegar o level atual do monstro
 		int currentLevelIndex = levels.IndexOf (currentLevel);			//variavel do tipo inteiro que vai receber o indice do level atual do monstro
 		int maxLevelIndex = levels.Count - 1;							//variavel que vai definir o level maximo do monstro de acordo com a quantidade especificada no inspetor menos 1
 		if (currentLevelIndex < maxLevelIndex){							//se o level atual for menor que o level maximo

@@ -8,9 +8,9 @@ public class Menu : MonoBehaviour {
     public GameObject panelMenu;
     public GameObject panelSelecao;
 
-    /*public void ChamaCenaFases(string cena){
+    public void ChamaCenaFases(string cena){
          Application.LoadLevel(cena);
-       }*/
+    }
 
     public void MeuNumero(int numero)  {
         /*if (ativo)

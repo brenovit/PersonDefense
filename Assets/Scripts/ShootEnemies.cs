@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class ShootEnemies : MonoBehaviour {
 	public float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
-	private TowerData towerData;											//este atributo vai receber os dados do monstro(torre)
+	private TowerData towerData;												//este atributo vai receber os dados do monstro(torre)
 
 	public List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
 
 	void Start () {
 		enemiesInRange = new List<GameObject> ();								//instancia a lista
 		lastShotTime = Time.time;												//o atributo de tempo receber o momento exato de inicio
-		towerData = gameObject.GetComponentInChildren<TowerData> ();		//o objeto contendo os dados do monstro é instanciado recebendo componente do filho deste gameObject
+		towerData = gameObject.GetComponentInChildren<TowerData> ();			//o objeto contendo os dados do monstro é instanciado recebendo componente do filho deste gameObject
 	}
 
 	void Update(){
@@ -27,7 +27,7 @@ public class ShootEnemies : MonoBehaviour {
 		}
 
 		if(target != null){														//se o alvo não for  nulo
-			if(Time.time - lastShotTime > towerData.CurrentLevel.cadencia){	//se o tempo atual menos o tmepo do ultimo tiro for menor que a cadencia do monstro
+			if(Time.time - lastShotTime > towerData.CurrentLevel.cadencia){		//se o tempo atual menos o tmepo do ultimo tiro for menor que a cadencia do monstro
 				Shoot (target.GetComponent<Collider2D> ());						//executa o método de atirar, passando o collider do inimigo
 				lastShotTime = Time.time;										//o tempo do ultimo tiro receber o segundo atual
 			}
@@ -63,7 +63,7 @@ public class ShootEnemies : MonoBehaviour {
 	}
 
 	void Shoot (Collider2D target){												//este método vai ser responsavel por atirar no inimigo
-		GameObject bulletPrefab = towerData.CurrentLevel.bala;				//variavel que vai receber o prefab da bala
+		GameObject bulletPrefab = towerData.CurrentLevel.bala;					//variavel que vai receber o prefab da bala
 
 		Vector3 startPosition = gameObject.transform.position;					//variavel da posição de inicio recebendo a posição atual do monstro
 		Vector3 targetPosition = target.transform.position;						//variavel da posição do alvo recebendo a posição do alvo
