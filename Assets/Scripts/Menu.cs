@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Menu : MonoBehaviour {
-    private bool ativo = false;
+    //private bool ativo = false;
     public GameObject panelOpcoes;
     public GameObject panelMenu;
     public GameObject panelSelecao;
