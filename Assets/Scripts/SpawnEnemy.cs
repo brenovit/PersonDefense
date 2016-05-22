@@ -46,7 +46,7 @@ public class SpawnEnemy : MonoBehaviour {
 			if(enemiesSpawned == waves[currentWave].maxEnemies 				//se a quantidaede de inimigos spawnados for igual a quantidade maxima de inimigos que tem de ser śpawnados na onda e
 			&& GameObject.FindGameObjectWithTag ("Enemy") == null){			//não tiver mais nenhum gameobject no game com a tag Enemy
 				gameManager.Wave++;											//avança para proxima onda
-				gameManager.Gold = Mathf.RoundToInt (gameManager.Gold * 1.1f);		//a quantidade de dinheiro do jogador vai ser uma quantidade aproximada do dinheiro que o jogador tiver vezes 1.1f;
+				gameManager.Tropas = Mathf.RoundToInt (gameManager.Tropas * 1.1f);		//a quantidade de dinheiro do jogador vai ser uma quantidade aproximada do dinheiro que o jogador tiver vezes 1.1f;
 				enemiesSpawned = 0;											//a variavel que conta os inimigos spawnados vai ser igual a 0
 				lastSpawnTime = Time.time;									//o tempo do ultimo spawn ser igual ao presente momento.
 			}

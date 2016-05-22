@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class GameManagerBehaviour : MonoBehaviour {
 
-	public Text goldLabel;											//esta variavel vai receber um componente Text, responsavel por exibir o dinheiro do jogador
-	private int gold;												//esta variavel vai difinir o dinheiro do jogador 
+	public Text tropasLabel;											//esta variavel vai receber um componente Text, responsavel por exibir o dinheiro do jogador
+	private int tropas;												//esta variavel vai difinir o dinheiro do jogador 
 
 	public Text waveLabel;											//componente Text, responsavel pela contagem da wave
 	public GameObject[] nextWaveLabels;								//este vetor vai definir 2 elementos para a animação do next waves
@@ -17,14 +17,14 @@ public class GameManagerBehaviour : MonoBehaviour {
 
 	public bool gameOver = false;
 
-	public int Gold {												//retornar ou definir o valor do dinheiro(encapsulamento)
+	public int Tropas {												//retornar ou definir o valor do dinheiro(encapsulamento)
 		get{
-			return gold;											//retorna o valor do dinheiro
+			return tropas;											//retorna o valor do dinheiro
 		}
 		set{ 
-			gold = value;											//definir que um dinheiro é uma variavel do tipo de valor; --duvida
-			goldLabel.GetComponent <Text>().text 
-											= "GOLD: " + gold;		//altera a label de dinheiro no jogo;
+			tropas = value;											//definir que um dinheiro é uma variavel do tipo de valor; --duvida
+			tropasLabel.GetComponent <Text>().text 
+											= "TROPAS: " + tropas;		//altera a label de dinheiro no jogo;
 		}
 	}
 
@@ -54,7 +54,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 
 			health = value;
 
-			healthLabel.text = "HEALTH: " + health;
+			healthLabel.text = "PESQUISADORES: " + health;
 
 			if(health <= 0 && !gameOver){
 				gameOver = true;
@@ -73,7 +73,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 	}
 
 	void Start () {
-		Gold = 100;
+		Tropas = 100;
 		Wave = 0;
 		Health = 5;
 	}

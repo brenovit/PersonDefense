@@ -4,18 +4,19 @@ using System.Collections.Generic;										//usar lista
 
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
 public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
-	public int tropas;													//custo do monstro
 	public GameObject visualizacao;										//aparencia do monstro
 	public GameObject bala;												//bala que o monstro vai atirar
 	public float cadencia;												//cadencia de tiro
 	public int dano;
+	public float campoVisao;
+	public int tropas;													//custo do monstro
 }
 
 public class TowerData : MonoBehaviour {								//classe de dados do monstro
 	public string nome;
 	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
-
+	private CircleCollider2D raio;
 	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
 		get {															//retornar o level
 			return currentLevel;										//retorna o level atual
@@ -36,6 +37,10 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 				}
 			}
 		}
+	}
+
+	void Start(){
+		raio = gameObject.GetComponent<CircleCollider2D> ();
 	}
 
 	public int getCurrentLevel(){
