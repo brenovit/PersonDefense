@@ -17,7 +17,7 @@ public class Mosquito : MonoBehaviour {
 		barraVida = this.gameObject.transform.FindChild ("HealthBar")					//2- GameObject filho deste gameObject na hierarchy com o nome de "HealthBar"
 			.GetComponent<HealthBar> ();												//1- a barra de vida recebe o componente healthbar presente no
 
-		gameManager = GameObject.Find("GameManager")
+		gameManager = GameObject.FindGameObjectWithTag("GameManager")
 			.GetComponent<GameManagerBehaviour>();										//2- GameObject na hierarchy com o nome GameManager
 	}                                                                                	//1- o gameManager o componente GameManagerBehaviour presente no
 

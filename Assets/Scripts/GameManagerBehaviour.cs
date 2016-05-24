@@ -9,7 +9,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 
 	public Text waveLabel;											//componente Text, responsavel pela contagem da wave
 	public GameObject[] nextWaveLabels;								//este vetor vai definir 2 elementos para a animação do next waves
-	public int wave;												//esta variavel vai definir a wave atual
+	public int orda;												//esta variavel vai definir a wave atual
 
 	public Text healthLabel;										//componente Text responsavel por exibir a vida do jogador
 	public GameObject[] healthIndicator;							//vetor que vai receber os germes que comem o biscoito
@@ -23,23 +23,22 @@ public class GameManagerBehaviour : MonoBehaviour {
 		}
 		set{ 
 			tropas = value;											//definir que um dinheiro é uma variavel do tipo de valor; --duvida
-			tropasLabel.GetComponent <Text>().text 
-											= "TROPAS: " + tropas;		//altera a label de dinheiro no jogo;
+			tropasLabel.text = "TROPAS: " + tropas;		//altera a label de dinheiro no jogo;
 		}
 	}
 
-	public int Wave {												//encapsulamento da variavel wave;
+	public int Orda {												//encapsulamento da variavel wave;
 		get{
-			return wave;
+			return orda;
 		}
 		set {
-			wave = value;											//define que a variavel wave vai receber um valor
+			orda = value;											//define que a variavel wave vai receber um valor
 			if(!gameOver){											
 				for(int i = 0; i < nextWaveLabels.Length; i++){		//se o jogo não acabar
 					nextWaveLabels [i].GetComponent <Animator> ().SetTrigger ("nextWave");	//escutar a animação de nextWave
 				}
 			}
-			waveLabel.text = "WAVE: " + (wave + 1);
+			waveLabel.text = "ORDA: " + (orda + 1);
 		}
 	}
 
@@ -74,7 +73,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 
 	void Start () {
 		Tropas = 100;
-		Wave = 0;
+		Orda = 0;
 		Health = 5;
 	}
 }

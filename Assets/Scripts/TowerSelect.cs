@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public class TowerSelect : MonoBehaviour{
 
 	public GameObject[] Slots;
-	private GameObject selectedTower;
-	public GameObject todosSpots;
+	[SerializeField]	private GameObject todosSpots;
 
 	public Text lblNome;
 	public Text lblDano;
@@ -65,7 +64,7 @@ public class TowerSelect : MonoBehaviour{
 			GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
 			for (int i = 0; i < spots.Length; i++) {
 				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
-					spots [i].GetComponent<PlaceTower> ().Destruir (torre);
+					spots [i].GetComponent<PlaceTower> ().Destruir ();
 					break;
 				}
 			}
@@ -78,8 +77,7 @@ public class TowerSelect : MonoBehaviour{
 		this.gameObject.SetActive (true);
 		painelTorres.SetActive (false);
 		botoes.ModoConstruir (false);
-		selectedTower = selectedTorre;
-		EscolheuTorre (selectedTower);
+		EscolheuTorre (selectedTorre);
 	}
 
 	private void AttCampos(string nome, int dano, float cadencia, int tropas){

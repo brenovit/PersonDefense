@@ -3,13 +3,14 @@ using System.Collections;
 
 public class GunBehavior : MonoBehaviour {
 	public Transform boca;
-	public Bullet bala;
+	public GameObject bala;
 	public float cadencia;
 	public GameObject alvo;
 	private float tempoUltimoTiro;
+
 	// Use this for initialization
 	void Start () {
-
+		
 	}
 
 	void Update(){
@@ -26,8 +27,6 @@ public class GunBehavior : MonoBehaviour {
 
 	public void Atira (GameObject alvo){
 
-		bala = Instantiate (bala);
-		bala.alvo = alvo;
 	}
 
 }

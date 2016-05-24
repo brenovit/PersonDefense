@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ShootEnemies : MonoBehaviour {
-	public float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
+	private float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
 	private TowerData towerData;												//este atributo vai receber os dados do monstro(torre)
 
-	public List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
+	[SerializeField]	private List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
 
 	void Start () {
 		enemiesInRange = new List<GameObject> ();								//instancia a lista
@@ -81,9 +81,9 @@ public class ShootEnemies : MonoBehaviour {
 		bulletComp.Dano = towerData.CurrentLevel.dano;
 
 		//por fim executa uma animação que representa o monstro atirando
-		Animator animator = 
+		/*Animator animator = 
 			towerData.CurrentLevel.visualizacao.GetComponent <Animator> ();
-		animator.SetTrigger ("fireShot");
+		animator.SetTrigger ("fireShot");*/
 		//e toca um som
 		AudioSource audioSource = gameObject.GetComponent<AudioSource> ();
 		audioSource.PlayOneShot (audioSource.clip);

@@ -38,7 +38,7 @@ public class MoveEnemy : MonoBehaviour {
 				Destroy (gameObject);														//destroi o game object
 				AudioSource audioSource = gameObject.GetComponent <AudioSource> ();			//toca um som
 				AudioSource.PlayClipAtPoint (audioSource.clip, transform.position);
-				GameManagerBehaviour gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehaviour> ();	//procura o Objeto no jogo que referencia o GameManager
+				GameManagerBehaviour gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerBehaviour> ();	//procura o Objeto no jogo que referencia o GameManager
 				gameManager.Health -= 1;
 			}
 		}
@@ -63,21 +63,6 @@ public class MoveEnemy : MonoBehaviour {
 		}
 		sprite.transform.localScale = new Vector3(inverter,y,z);							//altera a escala do Sprite
 	}
-
-	/*private void RotateIntoMoveDirection(){
-		//Esta parte vai calcular a direção de movimentação atual  do inimigo, subtraindo a posição do way point atual pela posição do proximo waypoint
-		Vector3 newStartPosition = waypoints[currentWaypoint].transform.position;
-		Vector3 newEndPosition = waypoints[currentWaypoint+1].transform.position;
-		Vector3 newDirection = (newEndPosition - newStartPosition);
-
-		float x = newDirection.x;																//salva a nova posição em x
-		float y = newDirection.y;																//salva a nova posição em y
-		float rotationAngle = Mathf.Atan2 (y,x) * 180 / Mathf.PI;								//o angulo de rotação, usando uma base matematica onde tem-se o valor do radiano, vezes 180 dividido por PI
-																								//radiano(razão em o comprimento de um arco e seu raio)
-		GameObject sprite = (GameObject) gameObject.transform.FindChild ("Sprite").gameObject;	//pega o filho do gameobject do inimigo, com o nome de sprite
-		sprite.transform.rotation = Quaternion.AngleAxis (rotationAngle, Vector3.forward);		//rotaciona esse game object de acordo com com o angulo definido anteriormente.
-
-	}*/
 
 	public float distanceToGoal(){											//este método calcula a distancia do inimigo até o final							
 		float distance = 0;													//variavel float que vai receber a distancia

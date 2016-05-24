@@ -3,11 +3,12 @@ using System.Collections;
 
 public class BulletBehavior : MonoBehaviour {
 
-	public float velocidade = 10;			//velocidade que a bala vai se movimentar
+	[SerializeField]	private float velocidade = 10;			//velocidade que a bala vai se movimentar
+	[SerializeField]	private GameObject efeito;
 	private int dano;					//dano que a bala vai causar
-	public GameObject alvo;			//alvo da bala
+	public GameObject alvo;				//alvo da bala
 	public Vector3 posicaoInicial;		//posição inicial da bala
-	public Vector3 posicaoAlvo;		//posição do alva da bala
+	public Vector3 posicaoAlvo;			//posição do alva da bala
 
 	private float  distancia;			//vai medir a distancia entre o inimigo e a torreia
 	private float tempoInicio;			//tempo que ela vai iniciar
@@ -22,7 +23,7 @@ public class BulletBehavior : MonoBehaviour {
 	void Start () {
 		tempoInicio = Time.time;											//a variavel tempoInicio vai receber o tempo de inicio da bala
 		distancia = Vector3.Distance (posicaoInicial, posicaoAlvo);	//esta variavel vai receber a distancia entre a posição inicial da bala e do alvo
-		GameObject gm = GameObject.Find("GameManager");					//estou criando uma variavel do tipo GameObject e mandando ela procurar em jogo o objeto que tiver o nome "GameManager"
+		GameObject gm = GameObject.FindGameObjectWithTag("GameManager");					//estou criando uma variavel do tipo GameObject e mandando ela procurar em jogo o objeto que tiver o nome "GameManager"
 		gameManager = gm.GetComponent<GameManagerBehaviour>();			//o objeto gameManager vai receber o GameObject gm, passando o seu componente GameManagerBehaviour
 	}
 
@@ -36,6 +37,7 @@ public class BulletBehavior : MonoBehaviour {
 				Mosquito inimigo = alvo.GetComponent<Mosquito> ();	//Cria-se um variavel do tipo mosquito recebendo o compoente Mosquito do alvo 
 				inimigo.RecebeuDano (dano);							//essa variavel chama o metodo recebeuDano
 				print ("Dano inimigo:" + dano);
+				//Instantiate (efeito);
 			}
 			Destroy(gameObject);										//por fim detroi-se a bala
 		}	
