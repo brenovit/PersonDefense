@@ -36,8 +36,7 @@ public class BulletBehavior : MonoBehaviour {
 			if (alvo != null) {										//se o alvo não for nulo
 				Mosquito inimigo = alvo.GetComponent<Mosquito> ();	//Cria-se um variavel do tipo mosquito recebendo o compoente Mosquito do alvo 
 				inimigo.RecebeuDano (dano);							//essa variavel chama o metodo recebeuDano
-				print ("Dano inimigo:" + dano);
-				//Instantiate (efeito);
+				Instantiate (efeito,gameObject.transform.position,Quaternion.identity);
 			}
 			Destroy(gameObject);										//por fim detroi-se a bala
 		}	

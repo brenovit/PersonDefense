@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Mosquito : MonoBehaviour {
 	public float vida = 100f;
-	public float velocidade = 2f;
-	public float resistencia = 2f;
-	public int recompensa = 10;
-
+	[SerializeField]	private float velocidade = 2f;
+	[SerializeField]	private float resistencia = 2f;
+	[SerializeField]	private int recompensa = 10;
+	[SerializeField]	private GameObject blood;
 	private HealthBar barraVida;														//Criase uma variavel do tipo HealthBar
 
 	private GameManagerBehaviour gameManager;											//este Objeto vai tratar de alterar os dados do player na classe gameObject
@@ -30,11 +30,13 @@ public class Mosquito : MonoBehaviour {
 	}
 
 	private void Morreu(){
-		AudioSource audioSource = this.gameObject.GetComponent<AudioSource>();		//um som que esta presente no inimgio
-		AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);			//é tocado
+		AudioSource audioSource = this.gameObject.GetComponent<AudioSource>();			//um som que esta presente no inimgio
+		AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);				//é tocado
 					
 		gameManager.Tropas += recompensa;												//o jogador aumenta o dinheiro de ocordo com o valor da remponsa
-		Destroy (gameObject);														//destroi este gameObject
+		Destroy (gameObject);															//destroi este gameObject
+		if(blood != null)
+			Instantiate (blood,gameObject.transform.position,Quaternion.identity);
 	}
 }
 
