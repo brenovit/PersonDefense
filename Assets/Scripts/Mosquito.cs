@@ -38,11 +38,5 @@ public class Mosquito : MonoBehaviour {
 		if(blood != null)
 			Instantiate (blood,gameObject.transform.position,Quaternion.identity);
 	}
-
-	void Update(){
-		barraVida.AlteraVida (vida);
-		if (vida < 1)
-			Morreu ();
-	}
 }
 
