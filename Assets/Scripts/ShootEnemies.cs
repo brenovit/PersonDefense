@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class ShootEnemies : MonoBehaviour {
 	private float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
 	private TowerData towerData;												//este atributo vai receber os dados do monstro(torre)
-
 	[SerializeField]	private List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
 
 	void Start () {
@@ -65,14 +64,14 @@ public class ShootEnemies : MonoBehaviour {
 	}
 
 	void Shoot (Collider2D target){												//este método vai ser responsavel por atirar no inimigo
-		GameObject bulletPrefab = towerData.CurrentLevel.bala;					//variavel que vai receber o prefab da bala
-
-		Vector3 startPosition = gameObject.transform.position;					//variavel da posição de inicio recebendo a posição atual do monstro
+		GameObject bulletPrefab = towerData.bala;								//variavel que vai receber o prefab da bala
+		Vector3 startPosition = towerData.CurrentLevel.muzzle.position;			//variavel da posição de inicio recebendo a posição atual do monstro
 		Vector3 targetPosition = target.transform.position;						//variavel da posição do alvo recebendo a posição do alvo
 		startPosition.z = bulletPrefab.transform.position.z;					//a posição no eixo z da posição inicial vai ser igual a posição em z da bala
 		targetPosition.z = bulletPrefab.transform.position.z;					//a posição no eixo Z do alvo vai receber a posição em z da bala
 
 		GameObject newBullet = (GameObject)Instantiate (bulletPrefab);			//instanciando uma nova bala como um GameObject
+
 		newBullet.transform.position = startPosition;							//a posição da bala vai ser igual a posição inicial do monstro
 		BulletBehavior bulletComp = newBullet.GetComponent<BulletBehavior> ();	//Cria-se um objeto do tipo comportamento da bala que vai receber a nova bala pegando o componente BulletBehavior
 		bulletComp.alvo = target.gameObject;									//este objeto de comportamento da bala em seu atributo de alvo vai receber o gameObject target e

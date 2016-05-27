@@ -5,18 +5,21 @@ using System.Collections.Generic;										//usar lista
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
 public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
 	public GameObject visualizacao;										//aparencia do monstro
-	public GameObject bala;												//bala que o monstro vai atirar
 	public float cadencia;												//cadencia de tiro
 	public int dano;
-	public float campoVisao;
+	public float campoVisao;											//Campo de visão da torre
 	public int tropas;													//custo do monstro
+	public Transform muzzle;
 }
 
 public class TowerData : MonoBehaviour {								//classe de dados do monstro
 	public string nome;
+	public GameObject bala;												//bala que o monstro vai atirar
+	[SerializeField]private CircleCollider2D raio;						//Collider que vai especificar o campo de visão da torre
 	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
-	private CircleCollider2D raio;
+
+
 	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
 		get {															//retornar o level
 			return currentLevel;										//retorna o level atual
@@ -40,7 +43,8 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 	}
 
 	void Start(){
-		raio = gameObject.GetComponent<CircleCollider2D> ();
+		if(raio != null)
+			raio = gameObject.GetComponent<CircleCollider2D> ();
 	}
 
 	public int getCurrentLevel(){
@@ -62,6 +66,8 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 		int currentLevelIndex = levels.IndexOf (currentLevel);			//variavel do tipo inteiro que vai receber o indice do level atual do monstro
 		if (currentLevelIndex < levels.Count - 1){						//se o indice do level atual for menor que a quantidade de levels - 1
 			CurrentLevel = levels[currentLevelIndex + 1];				//o level atual do monstro é aumentado de acordo com o valor que estiver na lista com indice + 1
+			if(raio != null)
+				raio.radius = CurrentLevel.campoVisao;
 		}
 	}
 

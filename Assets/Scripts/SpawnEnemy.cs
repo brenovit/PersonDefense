@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SpawnEnemy : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class SpawnEnemy : MonoBehaviour {
 
 	public GameObject[] waypoints;				//vetor que vai conter todos os wayspoints do mapa			
 	public bool	iniciouGame = false;
+	public Button btnStart;
 
 	void Start () {
 		lastSpawnTime = Time.time;				//tempo para o ultimo
@@ -23,6 +25,9 @@ public class SpawnEnemy : MonoBehaviour {
 	void Update (){
 		if (iniciouGame) {
 			StartSpawn ();
+			btnStart.interactable = false;
+		}else{
+			btnStart.interactable = true;
 		}
 	}
 
@@ -50,9 +55,7 @@ public class SpawnEnemy : MonoBehaviour {
 				iniciouGame = false;
 			}
 		} else {															//senão
-			gameManager.gameOver = true;									//ativa o game over do sistema
-			GameObject gameOverText = GameObject.FindGameObjectWithTag ("GameWon");		//procura o objeto com a tag GamoWon
-			gameOverText.GetComponent<Animator> ().SetBool ("gameOver",true);			//inicia a animação do texto de game over
+			gameManager.Venceu ();
 		}
 	}
 

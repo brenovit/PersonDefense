@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlaceTower : MonoBehaviour {
-	[SerializeField]	private GameObject[] torrePrefab;
-	[SerializeField]	private GameObject painel;
-
+	[SerializeField]	private GameObject[] torrePrefab = null;
+	[SerializeField]	private GameObject painel = null;
+	[SerializeField]	private GameObject	selector;
 	private GameObject torre;
 
 	private GameManagerBehaviour gameManager;
@@ -18,16 +18,21 @@ public class PlaceTower : MonoBehaviour {
 
 	void OnMouseUp ()	{	//Quando o mouse clicar no espaço
 		GameObject[] places = GameObject.FindGameObjectsWithTag ("Spot");
+		GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
+		Destroy (selectorAux);
 		for(int i = 0; i < places.Length; i++){
 			places [i].GetComponent<PlaceTower> ().euChamei = false;
 		}
 		if (torre == null) {
 			painel.gameObject.GetComponent<TowerSelect> ().AttTorresDisponiveis (torrePrefab);
-			euChamei = true;
 		} else {
 			painel.gameObject.GetComponent<TowerSelect> ().MelhorarDestruirTorre (torre);
-			euChamei = true;
 		}
+		euChamei = true;
+
+		if (euChamei)
+			Instantiate (selector, gameObject.transform.position, Quaternion.identity);
+
 	}
 
 	public void DesativaTudo(){
@@ -35,6 +40,8 @@ public class PlaceTower : MonoBehaviour {
 	}
 
 	public void ConstruirMelhorarTorre (GameObject tower){
+		GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
+		Destroy (selectorAux);
 		DesativaTudo ();
 		BotarTorre (tower);
 	}

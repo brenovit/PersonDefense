@@ -4,7 +4,7 @@ using System.Collections;
 public class BulletBehavior : MonoBehaviour {
 
 	[SerializeField]	private float velocidade = 10;			//velocidade que a bala vai se movimentar
-	[SerializeField]	private GameObject efeito;
+	public GameObject efeito;
 	private int dano;					//dano que a bala vai causar
 	public GameObject alvo;				//alvo da bala
 	public Vector3 posicaoInicial;		//posição inicial da bala

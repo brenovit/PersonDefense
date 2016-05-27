@@ -4,9 +4,9 @@ using System.Collections;
 public class Mosquito : MonoBehaviour {
 	public float vida = 100f;
 	[SerializeField]	private float velocidade = 2f;
-	[SerializeField]	private float resistencia = 2f;
+	//[SerializeField]	private float resistencia = 2f;
 	[SerializeField]	private int recompensa = 10;
-	[SerializeField]	private GameObject blood;
+	[SerializeField]	private GameObject blood  = null;
 	private HealthBar barraVida;														//Criase uma variavel do tipo HealthBar
 
 	private GameManagerBehaviour gameManager;											//este Objeto vai tratar de alterar os dados do player na classe gameObject
@@ -37,6 +37,12 @@ public class Mosquito : MonoBehaviour {
 		Destroy (gameObject);															//destroi este gameObject
 		if(blood != null)
 			Instantiate (blood,gameObject.transform.position,Quaternion.identity);
+	}
+
+	void Update(){
+		barraVida.AlteraVida (vida);
+		if (vida < 1)
+			Morreu ();
 	}
 }
 

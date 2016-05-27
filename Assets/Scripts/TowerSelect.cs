@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class TowerSelect : MonoBehaviour{
 
 	public GameObject[] Slots;
-	[SerializeField]	private GameObject todosSpots;
+	[SerializeField]	private GameObject todosSpots = null;
 
 	public Text lblNome;
 	public Text lblDano;

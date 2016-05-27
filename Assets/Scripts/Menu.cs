@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
     public GameObject panelOpcoes;
-    public GameObject panelMenu;
-    public GameObject panelSelecao;
+	public GameObject panelMenu;
+	public GameObject panelSelecao;
+	public	Slider volumeSlider;
 
+	void Star(){
+		PlayerPrefs.SetFloat ("Volume", 1.0f);
+	}
+	void Uptade(){
+		PlayerPrefs.SetFloat ("Volume",volumeSlider.value);
+	}
     public void ChamaCenaFases(string cena){
-        SceneManager.LoadScene(cena);
+		PlayerPrefs.SetFloat ("Volume",volumeSlider.value);
+		SceneManager.LoadScene(cena,LoadSceneMode.Single);
     }
 
     public void MeuNumero(int numero)  {

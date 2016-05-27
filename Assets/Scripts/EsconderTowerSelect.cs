@@ -7,5 +7,7 @@ public class EsconderTowerSelect : MonoBehaviour {
 
 	void OnMouseUp(){
 		panel.SetActive (false);
+		GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
+		Destroy (selectorAux);
 	}
 }

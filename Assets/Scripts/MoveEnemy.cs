@@ -59,7 +59,7 @@ public class MoveEnemy : MonoBehaviour {
 		if(nextWaypointX < currentWaypointX){												//se a posição em X do proximo waypoint dor menor do que a posição em X do waypoint atual			
 			inverter *= -1;																	//inverte a escala em x(passando a impressão de estar girando)
 		}else if(nextWaypointX > currentWaypointX){											//se a posição em X do proximo waypoint dor menor do que a posição em X do waypoint atual			
-			inverter *= -1;																	//inverte a escala em x(passando a impressão de estar girando - retornando para a escala original)
+			//inverter *= -1;																	//inverte a escala em x(passando a impressão de estar girando - retornando para a escala original)
 		}
 		sprite.transform.localScale = new Vector3(inverter,y,z);							//altera a escala do Sprite
 	}
