@@ -31,12 +31,11 @@ public class ShootEnemies : MonoBehaviour {
 				lastShotTime = Time.time;										//o tempo do ultimo tiro receber o segundo atual
 			}
 
-
 			GameObject view = towerData.CurrentLevel.visualizacao;
 			Vector3 direction = 												//cria-se um vector3d que vai passar a direção da bala
-				view.transform.position - target.transform.position;		//recebendo a posição atual do monstro menos a posição do inimigo
-			view.transform.rotation = Quaternion.AngleAxis (				//este mosntro vai rotacionar 
-				Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,		//de acordo com a tangente da posição x e y da bala vezes 180 dividido por PI em graus graus 
+				view.transform.position - target.transform.position;			//recebendo a posição atual do monstro menos a posição do inimigo
+			view.transform.rotation = Quaternion.AngleAxis (					//esta torre vai rotacionar num angulo fixo
+				Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,		//levando em conta o valor da tangente em considerção os eixos das ordenadas e das abscissas vezes 180 dividido por PI em graus graus 
 				new Vector3 (0, 0, 1)); 										//em um ponto fixo
 		}
 	}

@@ -10,7 +10,7 @@ public class EnemyDestructionDelegate : MonoBehaviour {
 
 	public EnemyDelegate enemyDelegate;						//ponteiro para um método
 
-	void OnDestroy(){										//metodo o qual o delegate vai chammar(apontar)
+	void OnDestroy(){										//metodo o qual o delegate vai chamar(apontar)
 		if (enemyDelegate != null)							//se o ponteiro não estiver vazio
 			enemyDelegate (gameObject);						//ele recebe o game object passoado coomo parametro
 	}
