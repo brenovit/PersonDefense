@@ -19,7 +19,6 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
-
 	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
 		get {															//retornar o level
 			return currentLevel;										//retorna o level atual
@@ -42,12 +41,12 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 		}
 	}
 
-	void Start(){
-		if(raio != null)
-			raio = gameObject.GetComponent<CircleCollider2D> ();
+	void Start(){														
+		if(raio != null)												//se não tiver um raio
+			raio = gameObject.GetComponent<CircleCollider2D> ();		//procura no gameObject o componente CircleCollider2D e atribui ao raio
 	}
 
-	public int getCurrentLevel(){
+	public int getCurrentLevel(){										//retorna o level atual da torre
 		int currentLevelIndex = levels.IndexOf (currentLevel);
 		return currentLevelIndex;
 	}
@@ -66,8 +65,8 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 		int currentLevelIndex = levels.IndexOf (currentLevel);			//variavel do tipo inteiro que vai receber o indice do level atual do monstro
 		if (currentLevelIndex < levels.Count - 1){						//se o indice do level atual for menor que a quantidade de levels - 1
 			CurrentLevel = levels[currentLevelIndex + 1];				//o level atual do monstro é aumentado de acordo com o valor que estiver na lista com indice + 1
-			if(raio != null)
-				raio.radius = CurrentLevel.campoVisao;
+			if(raio != null)											//se o raio não for nulo
+				raio.radius = CurrentLevel.campoVisao;					//aumenta o valor do raio do CircleCollider2D de acordo com o valor do campo de visão da torre
 		}
 	}
 

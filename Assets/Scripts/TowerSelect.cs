@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class TowerSelect : MonoBehaviour{
-
+	//esta classe vai centralizar o evento de contrui, melhorar, e destruir um torre 
 	public GameObject[] Slots;
 	[SerializeField]	private GameObject todosSpots = null;
 

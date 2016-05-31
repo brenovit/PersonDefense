@@ -4,23 +4,21 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
+	//esta classe manipula o menu principal
+	//estas variaveis se referem as 3 telas que o menu tera
     public GameObject panelOpcoes;
 	public GameObject panelMenu;
 	public GameObject panelSelecao;
-	public	Slider volumeSlider;
+	public GameObject telaCarregando;
+	public Image loadBar;
+	public Text percentText;
 
-	void Star(){
-		PlayerPrefs.SetFloat ("Volume", 1.0f);
-	}
-	void Uptade(){
-		PlayerPrefs.SetFloat ("Volume",volumeSlider.value);
-	}
-    public void ChamaCenaFases(string cena){
-		PlayerPrefs.SetFloat ("Volume",volumeSlider.value);
-		SceneManager.LoadScene(cena,LoadSceneMode.Single);
+    public void AbrirCena(string cena){					//este metodo vai carregar a cena de acordo com o valor passado em parametro pelo inspetor
+		telaCarregando.SetActive (true);
+		StartCoroutine (LevelCoroutine (cena));
     }
 
-    public void MeuNumero(int numero)  {
+    public void MeuNumero(int numero)  {						//este metodo contrala os paineis do menu se um ativo os outros 2 apagam
         switch (numero){                    //selecao == 1    //opcao == 2    //menu == 3
             case 1:
                 panelOpcoes.SetActive(false);
@@ -43,7 +41,16 @@ public class Menu : MonoBehaviour {
         }
     }
 
-    public void bt_exit() {
-        Application.Quit();
+    public void Sair() {										
+        Application.Quit();										//fechar o jogo
+    }
+
+    IEnumerator LevelCoroutine(string cena){
+		AsyncOperation async = SceneManager.LoadSceneAsync (cena);	//Carrega a cena, de forma unica, isto é, deleta as outras cenas.
+		while(!async.isDone){
+			loadBar.fillAmount = async.progress / 0.9f;
+			percentText.text = loadBar.fillAmount * 10 + "%";
+			yield return null;
+		}
     }
 }
