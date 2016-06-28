@@ -1,23 +1,57 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class Slot : MonoBehaviour {
 
-	public GameObject torre;
-	private TowerSelect towerSelect;
+namespace InGame
+{
+	public class Slot : MonoBehaviour
+	{
+		public GameObject tower;
 
-	void Start(){
-		towerSelect = GameObject.Find ("SelectTowerPanel").GetComponent<TowerSelect> ();
-	}
+		private static GameObject towerAux = null;
+		private GameManagerBehaviour gameManager;
+		private TowerSelect towerSelect;
+		private Selector selector;
 
-	public void TrocaImagem(GameObject torreImage){
-		torre = torreImage;
-		GameObject aux = torre.gameObject.transform.FindChild ("View 1").gameObject;
-		Sprite imagem = aux.GetComponent<SpriteRenderer> ().sprite;
-		this.gameObject.GetComponent<Image> ().sprite = imagem;
-	}
+		private int towerPrice = 1;
+		private int troops = 0;
 
-	public void SelecionouTorre(){
-		towerSelect.EscolheuTorre (torre);
+		void Awake ()
+		{
+			if (tower != null) {
+				ChangeImage ();
+				gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();
+				selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
+				towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
+				troops = gameManager.Tropas;
+				towerPrice = tower.GetComponent<TowerData> ().levels [0].tropas;
+			}						
+		}
+
+		private void OnEnable ()
+		{
+			if (troops < towerPrice) {
+				gameObject.GetComponent<Button> ().interactable = false;
+			} else {
+				gameObject.GetComponent<Button> ().interactable = true;
+			}
+
+		}
+
+		private void ChangeImage ()
+		{
+			GameObject aux = tower.gameObject.transform.FindChild ("View 1").gameObject;
+			Sprite imagem = aux.GetComponent<SpriteRenderer> ().sprite;
+			this.gameObject.GetComponent<Image> ().sprite = imagem;
+		}
+
+		public void SelectTower ()
+		{	
+			if (towerAux != tower && towerAux != null) {
+				Destroy (towerAux.gameObject);
+			}
+			towerAux = Instantiate (tower, selector.Position (), Quaternion.identity) as GameObject;
+			towerSelect.ChooseTower (towerAux);
+		}
 	}
 }

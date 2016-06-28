@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+
 public class AudioController : MonoBehaviour {
 
 	public	Slider volumeSlider;								//controlador de audio(não funcionando)
