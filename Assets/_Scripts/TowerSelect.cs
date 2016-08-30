@@ -36,6 +36,7 @@ namespace InGame
 				Destroy (gameObject);
 				return;
 			}
+			mode = new GameMode ();
 		}
 
 		private void OnEnable ()
@@ -50,10 +51,11 @@ namespace InGame
 
 		public void Action (GameMode mode)
 		{
+			print ("Executei a ação: " + mode);
 			this.mode = mode;
 			bool state = true;
 
-			switch (mode) {
+			switch (this.mode) {
 			case GameMode.Building:
 				buttons.ActiveBuild (true);
 				towersPanel.SetActive (state);
@@ -116,24 +118,11 @@ namespace InGame
 			print ("As info dtorre sera mostrada");
 		}
 
-		private void TowerInfo (string nome, int dano, float cadencia, int tropas)
-		{
-			lblNome.text = "Name: " + nome;
-			lblDano.text = "Damag: " + dano;
-			lblCadencia.text = "Fire Rate: " + cadencia + "tps";
-			lblTropas.text = "Troops: " + tropas;
-		}
-
 		public void _Cancel ()
 		{
+			print ("Cancelarei no modo: " + mode);
 			bool state = true;
 			switch (this.mode) {
-			case GameMode.Building:
-				towersPanel.SetActive (state);
-				actionsPanel.SetActive (!state);
-				towerSelectPanel.SetActive (!state);
-				//executar ação de cancelar enquanto estiver contruindo a torre
-				break;
 			case GameMode.Choosing:
 				buttons.ActiveBuild (true);
 				towersPanel.SetActive (state);
@@ -147,7 +136,27 @@ namespace InGame
 				towerSelectPanel.SetActive (false);
 				//executar ação de cancelar	ao clicar em uma torre
 				break;
+			case GameMode.Building:
+				actionsPanel.SetActive (!state);
+				towersPanel.SetActive (state);
+				//executar ação de cancelar enquanto estiver contruindo a torre
+				break;
 			}
+		}
+
+		public void Cancel ()
+		{
+			_Cancel ();
+			towerSelectPanel.SetActive (false);
+		}
+
+
+		private void TowerInfo (string nome, int dano, float cadencia, int tropas)
+		{
+			lblNome.text = "Name: " + nome;
+			lblDano.text = "Damag: " + dano;
+			lblCadencia.text = "Fire Rate: " + cadencia + "tps";
+			lblTropas.text = "Troops: " + tropas;
 		}
 	}
 }

@@ -19,8 +19,8 @@ namespace InGame
 
 		void OnMouseUp ()
 		{						//quando clicar no collider
-			towerSelect.Action (GameMode.Canceling);			//o painel é cancelado
-			selector.Destroy ();
+			towerSelect.Cancel ();		//o painel é cancelado
+			selector.DestroyAll ();
 		}
 	}
 }
