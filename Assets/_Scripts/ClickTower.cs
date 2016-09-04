@@ -17,7 +17,7 @@ namespace InGame
 		void OnMouseDown ()
 		{
 			print ("Eu sou: " + this.gameObject.name);
-			selector.InstantiateAt (this.gameObject.transform.position);
+			selector.InstantiateAt (this.gameObject.transform.position, this.gameObject);
 		}
 	}
 }

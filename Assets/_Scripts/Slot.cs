@@ -9,34 +9,26 @@ namespace InGame
 		public GameObject tower;
 
 		private static GameObject towerAux = null;
-		private GameManagerBehaviour gameManager;
 		private TowerSelect towerSelect;
 		private Selector selector;
-
-		private int towerPrice = 1;
-		private int troops = 0;
 
 		void Awake ()
 		{
 			if (tower != null) {
 				ChangeImage ();
-				gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();
 				selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
 				towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
-				troops = gameManager.Tropas;
-				towerPrice = tower.GetComponent<TowerData> ().levels [0].tropas;
 			}						
 		}
 
-		private void OnEnable ()
+		/*private void OnEnable ()
 		{
 			if (troops < towerPrice) {
 				gameObject.GetComponent<Button> ().interactable = false;
 			} else {
 				gameObject.GetComponent<Button> ().interactable = true;
 			}
-
-		}
+		}*/
 
 		private void ChangeImage ()
 		{
@@ -51,6 +43,7 @@ namespace InGame
 				Destroy (towerAux.gameObject);
 			}
 			towerAux = Instantiate (tower, selector.Position (), Quaternion.identity) as GameObject;
+			selector.Tower = towerAux;
 			towerSelect.ChooseTower (towerAux);
 		}
 	}
