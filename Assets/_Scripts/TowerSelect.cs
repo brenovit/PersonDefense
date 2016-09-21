@@ -27,6 +27,7 @@ namespace InGame
 		private static GameObject torre;
 
 		private static TowerSelect instance = null;
+		private Selector selector;
 
 		private void Awake ()
 		{	//Singleton
@@ -95,7 +96,11 @@ namespace InGame
 
 		public void _BuildTower ()
 		{
-			print ("A torre sera contruida");
+			selector = GameObject.FindGameObjectWithTag ("GameManager");
+
+			print ("A torre " + selector.Tower.name + " sera contruida em: " + selector.gameObject.transform.position.x + ", " + selector.gameObject.transform.position.y + ", " + selector.gameObject.transform.position.z);
+
+			Instantiate (selector.Tower, selector.transform.position, Quaternion.identity);
 		}
 
 		public void _DestroyTower ()

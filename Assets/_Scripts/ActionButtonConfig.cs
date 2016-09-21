@@ -18,12 +18,9 @@ namespace InGame
 
 		void Start ()
 		{
-			gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();
-			selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
-			towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
-
 			if (buttonName == "") {
 				print ("Não tem nome");
+			} else {
 				td = this.gameObject.GetComponent<Slot> ().tower.GetComponent<TowerData> ();
 				if (td != null) {
 					towerPrice = td.levels [0].tropas;
@@ -32,7 +29,11 @@ namespace InGame
 		}
 
 		private void OnEnable ()
-		{	
+		{
+			gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();
+			selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
+			towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
+
 			troops = gameManager.Tropas;
 			if (td != null) {
 				td = selector.Tower.GetComponent<TowerData> ();
