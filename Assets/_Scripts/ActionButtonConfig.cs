@@ -28,13 +28,14 @@ namespace InGame
 			}
 		}
 
-		private void OnEnable ()
+		private void OnEnable ()	//ativa antes do start
 		{
 			gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();
 			selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
 			towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
 
 			troops = gameManager.Tropas;
+
 			if (td != null) {
 				td = selector.Tower.GetComponent<TowerData> ();
 				towerPrice = td.levels [td.getCurrentLevel ()].tropas;
@@ -43,6 +44,7 @@ namespace InGame
 				}
 			}
 			this.gameObject.GetComponentInChildren<Text> ().text = string.Format ("{0}\n{1}", buttonName, towerPrice);
+
 			if (troops < towerPrice) {
 				gameObject.GetComponent<Button> ().interactable = false;
 			} else {

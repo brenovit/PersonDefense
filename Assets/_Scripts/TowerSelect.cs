@@ -24,7 +24,7 @@ namespace InGame
 		public ManipulaBotoes buttons;
 		private GameMode mode;
 
-		private static GameObject torre;
+		private GameObject tower = null;
 
 		private static TowerSelect instance = null;
 		private Selector selector;
@@ -42,15 +42,15 @@ namespace InGame
 
 		private void OnEnable ()
 		{
-			print ("Ativei");
+			//print ("Ativei");
 		}
 
 		private void OnDisable ()
 		{
-			print ("Desativei");
+			//print ("Desativei");
 		}
 
-		public void Action (GameMode mode)
+		public void Action (GameMode mode)	//essa rotina faz a validação da exibição dos botões, modo contruir, escolher
 		{
 			print ("Executei a ação: " + mode);
 			this.mode = mode;
@@ -78,29 +78,39 @@ namespace InGame
 			}
 		}
 
-		public void ChooseTower (GameObject selectedTorre)
+		public void SelectTower (GameObject selectedTorre)
 		{
 			towerSelectPanel.SetActive (true);
-			torre = selectedTorre;
+			print ("TowerSelect pegou: " + selectedTorre.GetComponent<TowerData> ().nome);
+			/*if (towerAux != tower && towerAux != null) {
+				Destroy (towerAux.gameObject);
+			}
+			//towerAux = Instantiate (tower, selector.Position (), Quaternion.identity) as GameObject;
+			//selector.Tower = towerAux;*/
 
-			TowerData td = torre.GetComponent<TowerData> ();
+			//tower = selectedTorre;
+
+			tower = Instantiate (selectedTorre, selector.Position (), Quaternion.identity) as GameObject;
+
+			TowerData td = selectedTorre.GetComponent<TowerData> ();
 
 			string nome = td.nome;
 			int tropas = td.levels [td.getCurrentLevel () + 1].tropas;
 			float cadencia = td.levels [td.getCurrentLevel () + 1].cadencia;
 			int dano = td.levels [td.getCurrentLevel () + 1].dano;
 
-			TowerInfo (nome, dano, cadencia, tropas);
+			//TowerInfo (nome, dano, cadencia, tropas);
 			Action (GameMode.Choosing);
 		}
 
 		public void _BuildTower ()
 		{
-			selector = GameObject.FindGameObjectWithTag ("GameManager");
+			selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent <Selector> ();
 
 			print ("A torre " + selector.Tower.name + " sera contruida em: " + selector.gameObject.transform.position.x + ", " + selector.gameObject.transform.position.y + ", " + selector.gameObject.transform.position.z);
 
-			Instantiate (selector.Tower, selector.transform.position, Quaternion.identity);
+			Instantiate (selector.Tower, selector.Position (), Quaternion.identity);
+			Destroy (selector.gameObject);
 		}
 
 		public void _DestroyTower ()
@@ -154,7 +164,6 @@ namespace InGame
 			_Cancel ();
 			towerSelectPanel.SetActive (false);
 		}
-
 
 		private void TowerInfo (string nome, int dano, float cadencia, int tropas)
 		{

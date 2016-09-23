@@ -9,14 +9,14 @@ namespace InGame
 		public GameObject tower;
 
 		private static GameObject towerAux = null;
-		private TowerSelect towerSelect;
+		private static TowerSelect towerSelect;
 		private Selector selector;
 
 		void Awake ()
 		{
 			if (tower != null) {
 				ChangeImage ();
-				selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
+				//selector = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<Selector> ();
 				towerSelect = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<TowerSelect> ();
 			}						
 		}
@@ -37,14 +37,17 @@ namespace InGame
 			this.gameObject.GetComponent<Image> ().sprite = imagem;
 		}
 
-		public void SelectTower ()
+		//quando o jogar clicar no botão da torre, o gameobject tower será mandado para o seletor
+		public void SelectTower ()	//manda a torre atual para o tower select
 		{	
 			if (towerAux != tower && towerAux != null) {
 				Destroy (towerAux.gameObject);
 			}
-			towerAux = Instantiate (tower, selector.Position (), Quaternion.identity) as GameObject;
-			selector.Tower = towerAux;
-			towerSelect.ChooseTower (towerAux);
+			//towerAux = Instantiate (tower, selector.Position (), Quaternion.identity) as GameObject;
+			print ("Slot mandou: " + tower.GetComponent<TowerData> ().nome);
+			//selector.Tower = tower;
+
+			towerSelect.SelectTower (tower);
 		}
 	}
 }

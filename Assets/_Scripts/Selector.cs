@@ -17,7 +17,7 @@ namespace InGame
 
 		public GameObject Tower {
 			get { return tower; }
-			set {
+			set {				
 				tower = value; 
 				print ("Estou selecionando: " + tower.gameObject.name);
 			}
@@ -35,7 +35,7 @@ namespace InGame
 
 		public Vector3 Position ()
 		{
-			return selectorObject.transform.position;
+			return this.selectorObject.transform.position;
 		}
 
 		/// <summary>
@@ -67,8 +67,8 @@ namespace InGame
 
 		public void Destroy ()
 		{
-			selectorObject = GameObject.FindGameObjectWithTag ("Selector");
-			Destroy (selectorObject.gameObject);
+			//selectorObject = GameObject.FindGameObjectWithTag ("Selector");
+			Destroy (this.selectorObject.gameObject);
 		}
 
 		public void DestroyAll ()
