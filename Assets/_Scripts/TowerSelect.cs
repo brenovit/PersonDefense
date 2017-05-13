@@ -28,6 +28,7 @@ namespace InGame
 
 		private static TowerSelect instance = null;
 		private Selector selector;
+		private GameObject gameManager;
 
 		private void Awake ()
 		{	//Singleton
@@ -38,6 +39,8 @@ namespace InGame
 				return;
 			}
 			mode = new GameMode ();
+			if (gameManager == null)
+				gameManager = GameObject.FindGameObjectWithTag ("GameManager");
 		}
 
 		private void OnEnable ()
@@ -89,8 +92,15 @@ namespace InGame
 			//selector.Tower = towerAux;*/
 
 			//tower = selectedTorre;
+			GameObject selectore = GameObject.FindGameObjectWithTag("Selector");
+			if (selectore == null)
+				print ("selectore igual null");
 
-			tower = Instantiate (selectedTorre, selector.Position (), Quaternion.identity) as GameObject;
+			selector = gameManager.GetComponent<Selector> ();
+			if (selector == null)
+				print ("Selector igual null");
+				
+			Instantiate (selectedTorre, selector.Position(), Quaternion.identity);
 
 			TowerData td = selectedTorre.GetComponent<TowerData> ();
 

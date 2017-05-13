@@ -35,6 +35,7 @@ namespace InGame
 
 		public Vector3 Position ()
 		{
+			print (this.selectorObject.transform.position);
 			return this.selectorObject.transform.position;
 		}
 
@@ -68,7 +69,8 @@ namespace InGame
 		public void Destroy ()
 		{
 			//selectorObject = GameObject.FindGameObjectWithTag ("Selector");
-			Destroy (this.selectorObject.gameObject);
+			if(this.selectorObject != null)
+				Destroy (this.selectorObject.gameObject);
 		}
 
 		public void DestroyAll ()

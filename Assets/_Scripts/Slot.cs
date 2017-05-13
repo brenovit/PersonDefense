@@ -10,7 +10,7 @@ namespace InGame
 
 		private static GameObject towerAux = null;
 		private static TowerSelect towerSelect;
-		private Selector selector;
+		//private Selector selector;
 
 		void Awake ()
 		{
