@@ -88,11 +88,11 @@ namespace DigitalRuby.RainMaker
                     {
                         if (CollisionLifeTimeRain == 0.0f)
                         {
-                            particles[i].lifetime = 0.0f;
+                            particles[i].remainingLifetime = 0.0f;
                         }
                         else
                         {
-                            particles[i].lifetime = Mathf.Min(particles[i].lifetime, UnityEngine.Random.Range(CollisionLifeTimeRain * 0.5f, CollisionLifeTimeRain * 2.0f));
+                            particles[i].remainingLifetime = Mathf.Min(particles[i].remainingLifetime, UnityEngine.Random.Range(CollisionLifeTimeRain * 0.5f, CollisionLifeTimeRain * 2.0f));
                             pos += (particles[i].velocity * Time.deltaTime);
                         }
                         changes = true;
@@ -108,7 +108,7 @@ namespace DigitalRuby.RainMaker
                 }
                 for (int i = 0; i < count; i++)
                 {
-                    if (particles[i].lifetime < 0.24f)
+                    if (particles[i].remainingLifetime < 0.24f)
                     {
                         Vector3 pos = particles[i].position + RainFallParticleSystem.transform.position;
                         EmitExplosion(ref pos);

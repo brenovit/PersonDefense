@@ -1,3 +1,7 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Shader created with Shader Forge v1.18 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
@@ -112,9 +116,9 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
                 o.normalDir = UnityObjectToWorldNormal(v.normal);
-                o.tangentDir = normalize( mul( _Object2World, float4( v.tangent.xyz, 0.0 ) ).xyz );
+                o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
-                float3 recipObjScale = float3( length(_World2Object[0].xyz), length(_World2Object[1].xyz), length(_World2Object[2].xyz) );
+                float3 recipObjScale = float3( length(unity_WorldToObject[0].xyz), length(unity_WorldToObject[1].xyz), length(unity_WorldToObject[2].xyz) );
                 float3 objScale = 1.0/recipObjScale;
                 float4 node_9767 = _Time + _TimeEditor;
                 float node_1302 = length((o.uv0*2.0+-1.0));
@@ -124,9 +128,9 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 float4 _DisplacementTile_var = tex2Dlod(_DisplacementTile,float4(TRANSFORM_TEX(node_6159, _DisplacementTile),0.0,0));
                 float3 node_3816 = (_DisplacementTile_var.r*float3(0,1,0)*_WavesAmplitude);
                 v.vertex.xyz += node_3816;
-                o.posWorld = mul(_Object2World, v.vertex);
+                o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 UNITY_TRANSFER_FOG(o,o.pos);
                 o.projPos = ComputeScreenPos (o.pos);
                 COMPUTE_EYEDEPTH(o.projPos.z);
@@ -134,7 +138,7 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 return o;
             }
             float4 frag(VertexOutput i) : COLOR {
-                float3 recipObjScale = float3( length(_World2Object[0].xyz), length(_World2Object[1].xyz), length(_World2Object[2].xyz) );
+                float3 recipObjScale = float3( length(unity_WorldToObject[0].xyz), length(unity_WorldToObject[1].xyz), length(unity_WorldToObject[2].xyz) );
                 float3 objScale = 1.0/recipObjScale;
                 #if UNITY_UV_STARTS_AT_TOP
                     float grabSign = -_ProjectionParams.x;
@@ -336,9 +340,9 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
                 o.normalDir = UnityObjectToWorldNormal(v.normal);
-                o.tangentDir = normalize( mul( _Object2World, float4( v.tangent.xyz, 0.0 ) ).xyz );
+                o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
-                float3 recipObjScale = float3( length(_World2Object[0].xyz), length(_World2Object[1].xyz), length(_World2Object[2].xyz) );
+                float3 recipObjScale = float3( length(unity_WorldToObject[0].xyz), length(unity_WorldToObject[1].xyz), length(unity_WorldToObject[2].xyz) );
                 float3 objScale = 1.0/recipObjScale;
                 float4 node_9767 = _Time + _TimeEditor;
                 float node_1302 = length((o.uv0*2.0+-1.0));
@@ -348,9 +352,9 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 float4 _DisplacementTile_var = tex2Dlod(_DisplacementTile,float4(TRANSFORM_TEX(node_6159, _DisplacementTile),0.0,0));
                 float3 node_3816 = (_DisplacementTile_var.r*float3(0,1,0)*_WavesAmplitude);
                 v.vertex.xyz += node_3816;
-                o.posWorld = mul(_Object2World, v.vertex);
+                o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 UNITY_TRANSFER_FOG(o,o.pos);
                 o.projPos = ComputeScreenPos (o.pos);
                 COMPUTE_EYEDEPTH(o.projPos.z);
@@ -359,7 +363,7 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 return o;
             }
             float4 frag(VertexOutput i) : COLOR {
-                float3 recipObjScale = float3( length(_World2Object[0].xyz), length(_World2Object[1].xyz), length(_World2Object[2].xyz) );
+                float3 recipObjScale = float3( length(unity_WorldToObject[0].xyz), length(unity_WorldToObject[1].xyz), length(unity_WorldToObject[2].xyz) );
                 float3 objScale = 1.0/recipObjScale;
                 #if UNITY_UV_STARTS_AT_TOP
                     float grabSign = -_ProjectionParams.x;
@@ -492,7 +496,7 @@ Shader "DCG/Water Shader/Water Surface PBR - DX9 - OpenGL" {
                 float4 _DisplacementTile_var = tex2Dlod(_DisplacementTile,float4(TRANSFORM_TEX(node_6159, _DisplacementTile),0.0,0));
                 float3 node_3816 = (_DisplacementTile_var.r*float3(0,1,0)*_WavesAmplitude);
                 v.vertex.xyz += node_3816;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 TRANSFER_SHADOW_CASTER(o)
                 return o;
             }
