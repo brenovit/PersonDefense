@@ -13,7 +13,7 @@ public class AttackMelee : MonoBehaviour, IAttack
     public float cooldown = 1f;
 
     // Animation controller for this AI
-    private Animation anim;
+	private Animator anim;
     // Counter for cooldown calculation
     private float cooldownCounter;
 
@@ -22,7 +22,7 @@ public class AttackMelee : MonoBehaviour, IAttack
     /// </summary>
     void Awake()
     {
-        anim = GetComponentInParent<Animation>();
+		anim = GetComponentInParent<Animator>();
         cooldownCounter = cooldown;
     }
 
@@ -66,7 +66,7 @@ public class AttackMelee : MonoBehaviour, IAttack
             }
             if (anim != null)
             {
-                anim.Play("AttackMelee");
+				anim.SetTrigger("attackMelee");
             }
         }
     }

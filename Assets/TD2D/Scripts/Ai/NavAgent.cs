@@ -10,8 +10,10 @@ public class NavAgent : MonoBehaviour
     // Speed im m/s
     public float speed = 1f;
     // Can moving
+	[HideInInspector]
     public bool move = true;
     // Can turning
+	[HideInInspector]
     public bool turn = true;
     // Destination position
     [HideInInspector]

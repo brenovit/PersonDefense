@@ -13,11 +13,7 @@ public class CapturePoint : MonoBehaviour
     /// <param name="other">Other.</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-        // If collision allowed for this scene
-        if (LevelManager.IsCollisionValid(gameObject.tag, other.gameObject.tag) == true)
-        {
-			Destroy(other.gameObject);
-            EventManager.TriggerEvent("Captured", other.gameObject, null);
-        }
+		Destroy(other.gameObject);
+		EventManager.TriggerEvent("Captured", other.gameObject, null);
     }
 }

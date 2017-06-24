@@ -7,15 +7,15 @@ using System;
 /// <summary>
 /// Timer to display current enemy wave.
 /// </summary>
-[RequireComponent (typeof(Image))]
+[RequireComponent(typeof(Image))]
 public class WavesTimer : MonoBehaviour
 {
 	// Visualisation of remaining TO
 	public Image timeBar;
-	// Current wave text field
-	public Text currentWaveText;
+    // Current wave text field
+    public Text currentWaveText;
 	// Max wave text field
-	public Text maxWaveNumberText;
+    public Text maxWaveNumberText;
 	// Effect of highlighted timer
 	public GameObject highlightedFX;
 	// Duration for highlighted effect
@@ -25,19 +25,28 @@ public class WavesTimer : MonoBehaviour
 
 	// Waves descriptor for this game level
 	private WavesInfo wavesInfo;
-	// Waves list
-	private List<float> waves = new List<float> ();
-	// Current wave
-	private int currentWave;
-	// TO before next wave
-	private float currentTimeout;
-	// Time counter
-	private float counter;
-	// Timer stopped
-	private bool finished;
+    // Waves list
+	private List<float> waves = new List<float>();
+    // Current wave
+    private int currentWave;
+    // TO before next wave
+    private float currentTimeout;
+    // Time counter
+    private float counter;
+    // Timer stopped
+    private bool finished;
 	//startedWave
 	private bool isToRun;
 
+	/// <summary>
+	/// Raises the disable event.
+	/// </summary>
+	void OnDisable()
+	{
+		StopAllCoroutines ();
+		EventManager.StopListening ("StartTimeWave", StartTimeWave);
+		EventManager.StopListening ("ShowTimer", ShowTimer);
+	}
 
 	/// <summary>
 	/// Raises the enable event.
@@ -49,45 +58,34 @@ public class WavesTimer : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Raises the disable event.
-	/// </summary>
-	void OnDisable ()
-	{
-		StopAllCoroutines ();
-		EventManager.StopListening ("StartTimeWave", StartTimeWave);
-		EventManager.StopListening ("ShowTimer", ShowTimer);
-	}
-
-	/// <summary>
 	/// Awake this instance.
 	/// </summary>
-	void Awake ()
-	{
-		wavesInfo = FindObjectOfType<WavesInfo> ();
-		Debug.Assert (timeBar && highlightedFX && wavesInfo && timeBar && currentWaveText && maxWaveNumberText, "Wrong initial settings");
-	}
+    void Awake()
+    {
+		wavesInfo = FindObjectOfType<WavesInfo>();
+		Debug.Assert(timeBar && highlightedFX && wavesInfo && timeBar && currentWaveText && maxWaveNumberText, "Wrong initial settings");
+    }
 
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
-	void Start ()
-	{
-		highlightedFX.SetActive (false);
+	void Start()
+    {
+		highlightedFX.SetActive(false);
 		waves = wavesInfo.wavesTimeouts;
-		currentWave = 0;
-		counter = 0f;
-		finished = false;
-		isToRun = false;
-		GetCurrentWaveCounter ();
-		maxWaveNumberText.text = waves.Count.ToString ();
-		currentWaveText.text = "0";
+        currentWave = 0;
+        counter = 0f;
+        finished = false;
+        GetCurrentWaveCounter();
+        maxWaveNumberText.text = waves.Count.ToString();
+        currentWaveText.text = "0";
 	}
-
+	
 	/// <summary>
 	/// Update this instance.
 	/// </summary>
-	void FixedUpdate ()
-	{		
+	void FixedUpdate()
+    {
 		if (finished == false) {
 			// Timeout expired
 			if (isToRun) {
@@ -125,33 +123,34 @@ public class WavesTimer : MonoBehaviour
 	/// Gets the current wave timeout.
 	/// </summary>
 	/// <returns><c>true</c>, if current wave timeout was gotten, <c>false</c> otherwise.</returns>
-	private bool GetCurrentWaveCounter ()
-	{
-		bool res = false;
-		if (waves.Count > currentWave) {
-			counter = currentTimeout = waves [currentWave];
-			res = true;
-		}
-		return res;
-	}
+    private bool GetCurrentWaveCounter()
+    {
+        bool res = false;
+        if (waves.Count > currentWave)
+        {
+            counter = currentTimeout = waves[currentWave];
+            res = true;
+        }
+        return res;
+    }
 
 	/// <summary>
 	/// Highlights the timer coroutine.
 	/// </summary>
 	/// <returns>The timer.</returns>
-	private IEnumerator HighlightTimer ()
+	private IEnumerator HighlightTimer()
 	{
-		highlightedFX.SetActive (true);
-		yield return new WaitForSeconds (highlightedTO);
-		highlightedFX.SetActive (false);
+		highlightedFX.SetActive(true);
+		yield return new WaitForSeconds(highlightedTO);
+		highlightedFX.SetActive(false);
 	}
 
 	/// <summary>
 	/// Raises the destroy event.
 	/// </summary>
-	void OnDestroy ()
+	void OnDestroy()
 	{
-		StopAllCoroutines ();
+		StopAllCoroutines();
 	}
 
 	private void StartTimeWave (GameObject obj, string param)

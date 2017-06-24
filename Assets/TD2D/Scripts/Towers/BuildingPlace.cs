@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public class BuildingPlace : MonoBehaviour
 {
-
+	
 }

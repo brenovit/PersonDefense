@@ -5,18 +5,14 @@ using UnityEngine;
 /// <summary>
 /// Allows AI to attack targets.
 /// </summary>
-public class AiStateAttack : MonoBehaviour, IAiState
+public class AiStateAttack : AiState
 {
+	[Space(10)]
     // Attack target closest to the capture point
     public bool useTargetPriority = false;
-    // Go to this state if agressive event occures
-    public string agressiveAiState;
     // Go to this state if passive event occures
-    public string passiveAiState;
+	public AiState passiveAiState;
 
-
-    // AI behavior of this object
-    private AiBehavior aiBehavior;
     // Target for attack
     private GameObject target;
     // List with potential targets finded during this frame
@@ -35,23 +31,13 @@ public class AiStateAttack : MonoBehaviour, IAiState
     /// <summary>
     /// Awake this instance.
     /// </summary>
-    void Awake ()
+    public override void Awake()
     {
-        aiBehavior = GetComponent<AiBehavior> ();
+		base.Awake();
         meleeAttack = GetComponentInChildren<AttackMelee>() as IAttack;
         rangedAttack = GetComponentInChildren<AttackRanged>() as IAttack;
         nav = GetComponent<NavAgent>();
-        Debug.Assert ((aiBehavior != null) && ((meleeAttack != null) || (rangedAttack != null)), "Wrong initial parameters");
-    }
-
-    /// <summary>
-    /// Raises the state enter event.
-    /// </summary>
-    /// <param name="previousState">Previous state.</param>
-    /// <param name="newState">New state.</param>
-    public void OnStateEnter (string previousState, string newState)
-    {
-
+        Debug.Assert(meleeAttack != null || rangedAttack != null, "Wrong initial parameters");
     }
 
     /// <summary>
@@ -59,7 +45,7 @@ public class AiStateAttack : MonoBehaviour, IAiState
     /// </summary>
     /// <param name="previousState">Previous state.</param>
     /// <param name="newState">New state.</param>
-    public void OnStateExit (string previousState, string newState)
+	public override void OnStateExit(AiState previousState, AiState newState)
     {
         LoseTarget();
     }
@@ -137,22 +123,35 @@ public class AiStateAttack : MonoBehaviour, IAiState
         myLastAttack = null;
     }
 
-    /// <summary>
-    /// Triggers the enter.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerEnter(Collider2D my, Collider2D other)
-    {
-
-    }
+	/// <summary>
+	/// Raises the trigger event.
+	/// </summary>
+	/// <param name="trigger">Trigger.</param>
+	/// <param name="my">My.</param>
+	/// <param name="other">Other.</param>
+	public override bool OnTrigger(AiState.Trigger trigger, Collider2D my, Collider2D other)
+	{
+		if (base.OnTrigger(trigger, my, other) == false)
+		{
+			switch (trigger)
+			{
+			case AiState.Trigger.TriggerStay:
+				TriggerStay(my, other);
+				break;
+			case AiState.Trigger.TriggerExit:
+				TriggerExit(my, other);
+				break;
+			}
+		}
+		return false;
+	}
 
     /// <summary>
     /// Triggers the stay.
     /// </summary>
     /// <param name="my">My.</param>
     /// <param name="other">Other.</param>
-    public void TriggerStay(Collider2D my, Collider2D other)
+	private void TriggerStay(Collider2D my, Collider2D other)
     {
         if (target == null) // Add new target to potential targets list
         {
@@ -199,7 +198,7 @@ public class AiStateAttack : MonoBehaviour, IAiState
     /// </summary>
     /// <param name="my">My.</param>
     /// <param name="other">Other.</param>
-    public void TriggerExit(Collider2D my, Collider2D other)
+	private void TriggerExit(Collider2D my, Collider2D other)
     {
         if (other.gameObject == target)
         {

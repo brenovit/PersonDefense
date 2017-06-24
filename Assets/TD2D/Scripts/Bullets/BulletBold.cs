@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletBold : MonoBehaviour, IBullet
 {
     // Damage amount
-    public int damage = 1;
+	[HideInInspector] public int damage = 1;
     // Maximum life time
     public float lifeTime = 3f;
     // Starting speed
@@ -42,6 +42,15 @@ public class BulletBold : MonoBehaviour, IBullet
     {
         this.damage = damage;
     }
+
+	/// <summary>
+	/// Get damage amount for this bullet.
+	/// </summary>
+	/// <returns>The damage.</returns>
+	public int GetDamage()
+	{
+		return damage;
+	}
 
     /// <summary>
     /// Fire bullet towards specified target.
@@ -140,15 +149,11 @@ public class BulletBold : MonoBehaviour, IBullet
     /// <param name="other">Other.</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-        // If collision allowed by scene
-        if (LevelManager.IsCollisionValid(gameObject.tag, other.gameObject.tag) == true)
+        // If target can receive damage
+        DamageTaker damageTaker = other.GetComponent<DamageTaker> ();
+        if (damageTaker != null)
         {
-            // If target can receive damage
-            DamageTaker damageTaker = other.GetComponent<DamageTaker> ();
-            if (damageTaker != null)
-            {
-                damageTaker.TakeDamage(damage);
-            }
+            damageTaker.TakeDamage(damage);
         }
     }
 }

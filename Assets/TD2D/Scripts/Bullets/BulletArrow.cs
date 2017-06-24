@@ -9,7 +9,7 @@ using UnityEngine.AI;
 public class BulletArrow : MonoBehaviour, IBullet
 {
     // Damage amount
-    public int damage = 1;
+	[HideInInspector] int damage = 1;
     // Maximum life time
     public float lifeTime = 3f;
     // Starting speed
@@ -22,6 +22,8 @@ public class BulletArrow : MonoBehaviour, IBullet
     public float ballisticOffset = 0.5f;
     // Do not rotate bullet during fly
     public bool freezeRotation = false;
+	// This bullet don't deal damage to single target. Only AOE damage if it is
+	public bool aoeDamageOnly = false;
 
     // From this position bullet was fired
     private Vector2 originPoint;
@@ -46,6 +48,15 @@ public class BulletArrow : MonoBehaviour, IBullet
     {
         this.damage = damage;
     }
+
+	/// <summary>
+	/// Get damage amount for this bullet.
+	/// </summary>
+	/// <returns>The damage.</returns>
+	public int GetDamage()
+	{
+		return damage;
+	}
 
     /// <summary>
     /// Fire bullet towards specified target.
@@ -92,12 +103,16 @@ public class BulletArrow : MonoBehaviour, IBullet
         {
             if (target != null)
             {
-                // If target can receive damage
-                DamageTaker damageTaker = target.GetComponent<DamageTaker>();
-                if (damageTaker != null)
-                {
-                    damageTaker.TakeDamage(damage);
-                }
+				// If bullet must deal damage to single target
+				if (aoeDamageOnly == false)
+				{
+					// If target can receive damage
+					DamageTaker damageTaker = target.GetComponent<DamageTaker>();
+					if (damageTaker != null)
+					{
+						damageTaker.TakeDamage(damage);
+					}
+				}
             }
             // Destroy bullet
             Destroy(gameObject);

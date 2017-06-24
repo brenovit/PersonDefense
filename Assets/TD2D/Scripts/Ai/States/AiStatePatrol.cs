@@ -5,21 +5,15 @@ using UnityEngine;
 /// <summary>
 /// Allows AI to move with specified path.
 /// </summary>
-public class AiStatePatrol : MonoBehaviour, IAiState
+public class AiStatePatrol : AiState
 {
+	[Space(10)]
+	[HideInInspector]
     // Specified path
     public Pathway path;
     // Need to loop path after last point is reached?
     public bool loop = false;
-    // Go to this state if agressive event occures
-    public string agressiveAiState;
-    // Go to this state if passive event occures
-    public string passiveAiState;
 
-    // Animation controller for this AI
-    private Animation anim;
-    // AI behavior of this object
-    private AiBehavior aiBehavior;
     // Navigation agent of this gameobject
     NavAgent navAgent;
     // Current destination
@@ -28,12 +22,11 @@ public class AiStatePatrol : MonoBehaviour, IAiState
     /// <summary>
     /// Awake this instance.
     /// </summary>
-    void Awake ()
+	public override void Awake()
     {
-        aiBehavior = GetComponent<AiBehavior>();
+		base.Awake();
         navAgent = GetComponent<NavAgent>();
-        anim = GetComponent<Animation>();
-        Debug.Assert (aiBehavior && navAgent, "Wrong initial parameters");
+        Debug.Assert (navAgent, "Wrong initial parameters");
     }
 
     /// <summary>
@@ -41,13 +34,13 @@ public class AiStatePatrol : MonoBehaviour, IAiState
     /// </summary>
     /// <param name="previousState">Previous state.</param>
     /// <param name="newState">New state.</param>
-    public void OnStateEnter (string previousState, string newState)
+	public override void OnStateEnter(AiState previousState, AiState newState)
     {
         if (path == null)
         {
             // If I have no path - try to find it
             path = FindObjectOfType<Pathway>();
-            Debug.Assert (path, "Have no path");
+            Debug.Assert(path, "Have no path");
         }
         if (destination == null)
         {
@@ -56,12 +49,13 @@ public class AiStatePatrol : MonoBehaviour, IAiState
         }
         // Set destination for navigation agent
         navAgent.destination = destination.transform.position;
+		// Start moving
+		navAgent.move = true;
+		navAgent.turn = true;
         if (anim != null)
         {
-            // Start moving
-            navAgent.move = true;
             // Play animation
-            anim.Play("Move");
+			anim.SetTrigger("move");
         }
     }
 
@@ -70,21 +64,17 @@ public class AiStatePatrol : MonoBehaviour, IAiState
     /// </summary>
     /// <param name="previousState">Previous state.</param>
     /// <param name="newState">New state.</param>
-    public void OnStateExit (string previousState, string newState)
+	public override void OnStateExit(AiState previousState, AiState newState)
     {
-        if (anim != null)
-        {
-            // Stop moving
-            navAgent.move = false;
-            // Stop animation
-            anim.Stop();
-        }
+		// Stop moving
+		navAgent.move = false;
+		navAgent.turn = false;
     }
 
     /// <summary>
     /// Fixed update for this instance.
     /// </summary>
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         if (destination != null)
         {
@@ -100,36 +90,6 @@ public class AiStatePatrol : MonoBehaviour, IAiState
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Triggers the enter.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerEnter(Collider2D my, Collider2D other)
-    {
-
-    }
-
-    /// <summary>
-    /// Triggers the stay.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerStay(Collider2D my, Collider2D other)
-    {
-        aiBehavior.ChangeState(agressiveAiState);
-    }
-
-    /// <summary>
-    /// Triggers the exit.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerExit(Collider2D my, Collider2D other)
-    {
-
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Pathway : MonoBehaviour
 {
+	#if UNITY_EDITOR
     /// <summary>
     /// Update this instance.
     /// </summary>
@@ -20,10 +21,11 @@ public class Pathway : MonoBehaviour
             for (idx = 1; idx < waypoints.Length; idx++)
             {
                 // Draw blue lines along pathway in edit mode
-                Debug.DrawLine(waypoints[idx - 1].transform.position, waypoints[idx].transform.position, Color.blue);
+				Debug.DrawLine(waypoints[idx - 1].transform.position, waypoints[idx].transform.position, new Color(0.7f, 0f, 0f));
             }
         }
     }
+	#endif
 
     /// <summary>
     /// Gets the nearest waypoint for specified position.
@@ -76,16 +78,23 @@ public class Pathway : MonoBehaviour
         return res;
     }
 
+	/// <summary>
+	/// Gets the remaining path distance from specified waypoint.
+	/// </summary>
+	/// <returns>The path distance.</returns>
+	/// <param name="fromWaypoint">From waypoint.</param>
     public float GetPathDistance(Waypoint fromWaypoint)
     {
         Waypoint[] waypoints = GetComponentsInChildren<Waypoint>();
         bool hitted = false;
         float pathDistance = 0f;
         int idx;
+		// Calculate remaining path
         for (idx = 0; idx < waypoints.Length; ++idx)
         {
             if (hitted == true)
             {
+				// Add distance between waypoint to result
                 Vector2 distance = waypoints[idx].transform.position - waypoints[idx - 1].transform.position;
                 pathDistance += distance.magnitude;
             }

@@ -19,22 +19,21 @@ public class SpawnPoint : MonoBehaviour
         // List of enemies in this wave
         public List<GameObject> enemies;
     }
-
-    // If enemy not set, this folder will use to get random enemy
-    public string enemiesResourceFolder = "Enemies";
+		
     // Enemies will have different speed in specified interval
     public float speedRandomizer = 0.2f;
     // Delay between enemies spawn in wave
     public float unitSpawnDelay = 0.8f;
     // Waves list for this spawner
     public List<Wave> waves;
+	// This list is used for random enemy spawn
+	[HideInInspector]
+	public List<GameObject> randomEnemiesList = new List<GameObject>();
 
     // Enemies will move along this pathway
     private Pathway path;
     // Delay counter
     private float counter;
-    // List for random enemy generation
-    private List<GameObject> enemyPrefabs;
     // Buffer with active spawned enemies
     private List<GameObject> activeEnemies = new List<GameObject>();
     // All enemies were spawned
@@ -46,9 +45,7 @@ public class SpawnPoint : MonoBehaviour
     void Awake ()
     {
         path = GetComponentInParent<Pathway>();
-        // Load enemies prefabs from specified directory
-        enemyPrefabs = Resources.LoadAll<GameObject>(enemiesResourceFolder).ToList();
-        Debug.Assert((path != null) && (enemyPrefabs != null), "Wrong initial parameters");
+        Debug.Assert(path != null, "Wrong initial parameters");
     }
 
     /// <summary>
@@ -77,7 +74,7 @@ public class SpawnPoint : MonoBehaviour
         // If all spawned enemies are dead
         if ((finished == true) && (activeEnemies.Count <= 0))
         {
-            EventManager.TriggerEvent("AllEnemiesAreDead", null, null);
+			EventManager.TriggerEvent("AllEnemiesAreDead", null, null);
             gameObject.SetActive(false);
         }
     }
@@ -95,11 +92,15 @@ public class SpawnPoint : MonoBehaviour
             {
                 GameObject prefab = null;
                 prefab = enemy;
-                // If enemy prefab not specified - get random enemy
-                if (prefab == null)
-                {
-                    prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
-                }
+                // If enemy prefab not specified - spawn random enemy
+				if (prefab == null && randomEnemiesList.Count > 0)
+				{
+					prefab = randomEnemiesList[Random.Range (0, randomEnemiesList.Count)];
+				}
+				if (prefab == null)
+				{
+					Debug.LogError("Have no enemy prefab. Please specify enemies in Level Manager or in Spawn Point");
+				}
                 // Create enemy
                 GameObject newEnemy = Instantiate(prefab, transform.position, transform.rotation);
                 // Set pathway

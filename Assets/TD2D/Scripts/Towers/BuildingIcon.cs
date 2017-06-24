@@ -21,7 +21,7 @@ public class BuildingIcon : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
-        EventManager.StartListening("UserClick", UserClick);
+        EventManager.StartListening("UserUiClick", UserUiClick);
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class BuildingIcon : MonoBehaviour
     /// </summary>
     void OnDisable()
     {
-        EventManager.StopListening("UserClick", UserClick);
+		EventManager.StopListening("UserUiClick", UserUiClick);
     }
 
     /// <summary>
@@ -54,11 +54,11 @@ public class BuildingIcon : MonoBehaviour
     }
 
     /// <summary>
-    /// On user click.
+    /// On user UI click.
     /// </summary>
     /// <param name="obj">Object.</param>
     /// <param name="param">Parameter.</param>
-    private void UserClick(GameObject obj, string param)
+	private void UserUiClick(GameObject obj, string param)
     {
         // If clicked on this icon
         if (obj == gameObject)

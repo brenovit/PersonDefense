@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Main script to operate all AI states
+/// Main script to control all AI states
 /// </summary>
 public class AiBehavior : MonoBehaviour
 {
     // This state will be activate on start
-    public string defaultState;
+	public AiState defaultState;
 
     // List with all states for this AI
-    private List<IAiState> aiStates = new List<IAiState>();
+	private List<AiState> aiStates = new List<AiState>();
     // The state that was before
-    private IAiState previousState;
+	private AiState previousState;
     // Active state
-    private IAiState currentState;
+	private AiState currentState;
 
     /// <summary>
     /// Start this instance.
@@ -23,10 +23,10 @@ public class AiBehavior : MonoBehaviour
     void Start()
     {
         // Get all AI states from this gameobject
-        IAiState[] states = GetComponents<IAiState>();
+		AiState[] states = GetComponents<AiState>();
         if (states.Length > 0) 
         {
-            foreach (IAiState state in states)
+			foreach (AiState state in states)
             {
                 // Add state to list
                 aiStates.Add(state);
@@ -34,11 +34,11 @@ public class AiBehavior : MonoBehaviour
             if (defaultState != null)
             {
                 // Set active and previous states as default state
-                previousState = currentState = GetComponent(defaultState) as IAiState;
+				previousState = currentState = defaultState;
                 if (currentState != null)
                 {
                     // Go to active state
-                    ChangeState(currentState.GetType().ToString());
+                    ChangeState(currentState);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ public class AiBehavior : MonoBehaviour
         } 
         else 
         {
-            Debug.LogError ("No AI states found");
+            Debug.LogError("No AI states found");
         }
     }
 
@@ -62,7 +62,7 @@ public class AiBehavior : MonoBehaviour
     public void GoToDefaultState()
     {
         previousState = currentState;
-        currentState = GetComponent(defaultState) as IAiState;
+		currentState = defaultState;
         NotifyOnStateExit();
         DisableAllStates();
         EnableNewState();
@@ -73,14 +73,14 @@ public class AiBehavior : MonoBehaviour
     /// Change Ai state.
     /// </summary>
     /// <param name="state">State.</param>
-    public void ChangeState(string state)
+	public void ChangeState(AiState state)
     {
-        if (state != "")
+		if (state != null)
         {
             // Try to find such state in list
-            foreach (IAiState aiState in aiStates)
+			foreach (AiState aiState in aiStates)
             {
-                if (state == aiState.GetType().ToString())
+                if (state == aiState)
                 {
                     previousState = currentState;
                     currentState = aiState;
@@ -94,7 +94,7 @@ public class AiBehavior : MonoBehaviour
             Debug.Log("No such state " + state);
             // If have no such state - go to default state
             GoToDefaultState();
-            Debug.Log("Go to default state " + aiStates[0].GetType().ToString());
+            Debug.Log("Go to default state " + aiStates[0]);
         }
     }
 
@@ -103,10 +103,9 @@ public class AiBehavior : MonoBehaviour
     /// </summary>
     private void DisableAllStates()
     {
-        foreach (IAiState aiState in aiStates) 
+		foreach (AiState aiState in aiStates) 
         {
-            MonoBehaviour state = GetComponent(aiState.GetType().ToString()) as MonoBehaviour;
-            state.enabled = false;
+			aiState.enabled = false;
         }
     }
 
@@ -115,8 +114,7 @@ public class AiBehavior : MonoBehaviour
     /// </summary>
     private void EnableNewState()
     {
-        MonoBehaviour state = GetComponent(currentState.GetType().ToString()) as MonoBehaviour;
-        state.enabled = true;
+		currentState.enabled = true;
     }
 
     /// <summary>
@@ -124,10 +122,7 @@ public class AiBehavior : MonoBehaviour
     /// </summary>
     private void NotifyOnStateExit()
     {
-        string prev = previousState.GetType().ToString();
-        string active = currentState.GetType().ToString();
-        IAiState state = GetComponent(prev) as IAiState;
-        state.OnStateExit(prev, active);
+		previousState.OnStateExit(previousState, currentState);
     }
 
     /// <summary>
@@ -135,60 +130,21 @@ public class AiBehavior : MonoBehaviour
     /// </summary>
     private void NotifyOnStateEnter()
     {
-        string prev = previousState.GetType().ToString();
-        string active = currentState.GetType().ToString();
-        IAiState state = GetComponent(active) as IAiState;
-        state.OnStateEnter(prev, active);
+		currentState.OnStateEnter(previousState, currentState);
     }
 
-    /// <summary>
-    /// Triggers the enter2d.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerEnter2D(Collider2D my, Collider2D other)
+   	/// <summary>
+   	/// Raises the trigger event.
+   	/// </summary>
+   	/// <param name="trigger">Trigger.</param>
+   	/// <param name="my">My.</param>
+   	/// <param name="other">Other.</param>
+	public void OnTrigger(AiState.Trigger trigger, Collider2D my, Collider2D other)
     {
-		if (other.gameObject == null) {
-			Debug.Log("Other is null");
+		if (currentState == null)
+		{
+			Debug.Log("Current sate is null");
 		}
-		if (my.gameObject == null) {
-			Debug.Log("My is null");
-		}
-		if (gameObject == null) {
-			Debug.Log("GO is null");
-		}
-        if (LevelManager.IsCollisionValid(gameObject.tag, other.gameObject.tag) == true)
-        {
-			if (currentState == null) {
-				Debug.Log ("Current sate is null");
-			}
-            currentState.TriggerEnter(my, other);
-        }
-    }
-
-    /// <summary>
-    /// Triggers the stay2d.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerStay2D(Collider2D my, Collider2D other)
-    {
-        if (LevelManager.IsCollisionValid(gameObject.tag, other.gameObject.tag) == true)
-        {
-            currentState.TriggerStay(my, other);
-        }
-    }
-
-    /// <summary>
-    /// Triggers the exit2d.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerExit2D(Collider2D my, Collider2D other)
-    {
-        if (LevelManager.IsCollisionValid(gameObject.tag, other.gameObject.tag) == true)
-        {
-            currentState.TriggerExit(my, other);
-        }
+		currentState.OnTrigger(trigger, my, other);
     }
 }

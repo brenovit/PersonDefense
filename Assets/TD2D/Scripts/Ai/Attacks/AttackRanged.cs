@@ -17,7 +17,7 @@ public class AttackRanged : MonoBehaviour, IAttack
     public Transform firePoint;
 
     // Animation controller for this AI
-    private Animation anim;
+	private Animator anim;
     // Counter for cooldown calculation
     private float cooldownCounter;
 
@@ -26,7 +26,7 @@ public class AttackRanged : MonoBehaviour, IAttack
     /// </summary>
     void Awake()
     {
-        anim = GetComponentInParent<Animation>();
+		anim = GetComponentInParent<Animator>();
         cooldownCounter = cooldown;
         Debug.Assert(arrowPrefab && firePoint, "Wrong initial parameters");
     }
@@ -70,7 +70,7 @@ public class AttackRanged : MonoBehaviour, IAttack
             bullet.Fire(target);
             if (anim != null)
             {
-                anim.Play("AttackRanged");
+				anim.SetTrigger("attackRanged");
             }
         }
     }

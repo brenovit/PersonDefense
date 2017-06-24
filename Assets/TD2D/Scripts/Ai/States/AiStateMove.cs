@@ -5,48 +5,43 @@ using UnityEngine;
 /// <summary>
 /// Allows AI to operate move towards destination.
 /// </summary>
-public class AiStateMove : MonoBehaviour, IAiState
+public class AiStateMove : AiState
 {
+	[Space(10)]
     // End point for moving
     public Transform destination;
-    // Go to this state if agressive event occures
-    public string agressiveAiState;
     // Go to this state if passive event occures
-    public string passiveAiState;
+	public AiState passiveAiState;
 
-    // Animation controller for this AI
-    private Animation anim;
-    // AI behavior of this object
-    private AiBehavior aiBehavior;
     // Navigation agent of this gameobject
     NavAgent navAgent;
 
-    /// <summary>
-    /// Awake this instance.
-    /// </summary>
-    void Awake ()
-    {
-        aiBehavior = GetComponent<AiBehavior>();
-        navAgent = GetComponent<NavAgent>();
-        anim = GetComponentInParent<Animation>();
-        Debug.Assert (aiBehavior && navAgent, "Wrong initial parameters");
-    }
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
+	public override void Awake()
+	{
+		base.Awake();
+		navAgent = GetComponent<NavAgent>();
+		Debug.Assert (navAgent, "Wrong initial parameters");
+	}
 
     /// <summary>
     /// Raises the state enter event.
     /// </summary>
     /// <param name="previousState">Previous state.</param>
     /// <param name="newState">New state.</param>
-    public void OnStateEnter (string previousState, string newState)
+	public override void OnStateEnter(AiState previousState, AiState newState)
     {
         // Set destination for navigation agent
         navAgent.destination = destination.position;
+		// Start moving
+		navAgent.move = true;
+		navAgent.turn = true;
         if (anim != null)
         {
-            // Start moving
-            navAgent.move = true;
             // Play animation
-            anim.Play("Move");
+			anim.SetTrigger("move");
         }
     }
 
@@ -55,21 +50,17 @@ public class AiStateMove : MonoBehaviour, IAiState
     /// </summary>
     /// <param name="previousState">Previous state.</param>
     /// <param name="newState">New state.</param>
-    public void OnStateExit (string previousState, string newState)
+	public override void OnStateExit(AiState previousState, AiState newState)
     {
-        if (anim != null)
-        {
-            // Stop moving
-            navAgent.move = false;
-            // Stop animation
-            anim.Stop();
-        }
+		// Stop moving
+		navAgent.move = false;
+		navAgent.turn = false;
     }
 
     /// <summary>
     /// Fixed update for this instance.
     /// </summary>
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         // If destination reached
         if ((Vector2)transform.position == (Vector2)destination.position)
@@ -79,35 +70,5 @@ public class AiStateMove : MonoBehaviour, IAiState
             // Go to passive state
             aiBehavior.ChangeState(passiveAiState);
         }
-    }
-
-    /// <summary>
-    /// Triggers the enter.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerEnter(Collider2D my, Collider2D other)
-    {
-
-    }
-
-    /// <summary>
-    /// Triggers the stay.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerStay(Collider2D my, Collider2D other)
-    {
-
-    }
-
-    /// <summary>
-    /// Triggers the exit.
-    /// </summary>
-    /// <param name="my">My.</param>
-    /// <param name="other">Other.</param>
-    public void TriggerExit(Collider2D my, Collider2D other)
-    {
-
     }
 }

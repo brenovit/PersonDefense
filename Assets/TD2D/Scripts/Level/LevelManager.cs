@@ -13,14 +13,16 @@ public class LevelManager : MonoBehaviour
 	// Gold amount for this level
 	public int goldAmount = 20;
 	// How many times enemies can reach capture point before defeat
-	public int defeatCounter = 1;
+	public int defeatAttempts = 1;
+	// List with allowed randomly generated enemy for this level
+	public List<GameObject> allowedEnemies = new List<GameObject>();
 
     // User interface manager
     private UiManager uiManager;
     // Nymbers of enemy spawners in this level
     private int spawnNumbers;
 	// Current loose counter
-	private int looseCounter;
+	private int beforeLooseCounter;
 
     /// <summary>
     /// Awake this instance.
@@ -37,15 +39,22 @@ public class LevelManager : MonoBehaviour
 	void Start()
 	{
 		uiManager = FindObjectOfType<UiManager>();
-		spawnNumbers = FindObjectsOfType<SpawnPoint>().Length;
+		SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+		spawnNumbers = spawnPoints.Length;
 		if (spawnNumbers <= 0)
 		{
 			Debug.LogError("Have no spawners");
 		}
+		// Set random enemies list for each spawner
+		foreach (SpawnPoint spawnPoint in spawnPoints)
+		{
+			spawnPoint.randomEnemiesList = allowedEnemies;
+		}
 		Debug.Assert(uiManager, "Wrong initial parameters");
 		// Set gold amount for this level
 		uiManager.SetGold(goldAmount);
-		looseCounter = defeatCounter;
+		beforeLooseCounter = defeatAttempts;
+		uiManager.SetDefeatAttempts(beforeLooseCounter);
 	}
 
     /// <summary>
@@ -67,68 +76,17 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Determines if is collision valid for this scene.
-    /// </summary>
-    /// <returns><c>true</c> if is collision valid the specified myTag otherTag; otherwise, <c>false</c>.</returns>
-    /// <param name="myTag">My tag.</param>
-    /// <param name="otherTag">Other tag.</param>
-    public static bool IsCollisionValid(string myTag, string otherTag)
-    {
-        bool res = false;
-        switch (myTag)
-        {
-            case "Tower":
-            case "Defender":
-                switch (otherTag)
-                {
-                    case "Enemy":
-                        res = true;
-                        break;
-                }
-                break;
-            case "Enemy":
-                switch (otherTag)
-                {
-                    case "Defender":
-                    case "Tower":
-                        res = true;
-                        break;
-                }
-                break;
-            case "Bullet":
-                switch (otherTag)
-                {
-                    case "Enemy":
-                        res = true;
-                        break;
-                }
-                break;
-            case "CapturePoint":
-                switch (otherTag)
-                {
-                    case "Enemy":
-                        res = true;
-                        break;
-                }
-                break;
-            default:
-                Debug.Log("Unknown collision tag => " + myTag + " - " + otherTag);
-                break;
-        }
-        return res;
-    }
-
-    /// <summary>
     /// Enemy reached capture point.
     /// </summary>
     /// <param name="obj">Object.</param>
     /// <param name="param">Parameter.</param>
     private void Captured(GameObject obj, string param)
     {
-		if (looseCounter > 0)
+		if (beforeLooseCounter > 0)
 		{
-			looseCounter--;
-			if (looseCounter <= 0)
+			beforeLooseCounter--;
+			uiManager.SetDefeatAttempts(beforeLooseCounter);
+			if (beforeLooseCounter <= 0)
 			{
 				// Defeat
 				uiManager.GoToDefeatMenu();

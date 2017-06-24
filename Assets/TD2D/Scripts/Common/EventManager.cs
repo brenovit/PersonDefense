@@ -84,7 +84,7 @@ public class EventManager : MonoBehaviour
     /// <param name="eventName">Event name.</param>
     /// <param name="obj">Object.</param>
     /// <param name="param">Parameter.</param>
-    public static void TriggerEvent(string eventName,GameObject obj, string param)
+    public static void TriggerEvent(string eventName, GameObject obj, string param)
     {
 		if (instance == null)
 		{

@@ -11,8 +11,6 @@ public class Tower : MonoBehaviour
     public GameObject buildingTreePrefab;
     // Visualisation of attack range for this tower
     public GameObject rangeImage;
-	// Collider of attack range for this tower
-	public CircleCollider2D range;
 
     // User interface manager
     private UiManager uiManager;
@@ -30,6 +28,7 @@ public class Tower : MonoBehaviour
     {
         EventManager.StartListening("GamePaused", GamePaused);
         EventManager.StartListening("UserClick", UserClick);
+		EventManager.StartListening("UserUiClick", UserClick);
     }
 
     /// <summary>
@@ -39,6 +38,7 @@ public class Tower : MonoBehaviour
     {
         EventManager.StopListening("GamePaused", GamePaused);
         EventManager.StopListening("UserClick", UserClick);
+		EventManager.StopListening("UserUiClick", UserClick);
     }
 
     /// <summary>
@@ -47,6 +47,7 @@ public class Tower : MonoBehaviour
     void Start()
     {
         uiManager = FindObjectOfType<UiManager>();
+		// This canvas wiil use to place building tree UI
         Canvas[] canvases = Resources.FindObjectsOfTypeAll<Canvas>();
         foreach (Canvas canv in canvases)
         {
@@ -58,11 +59,6 @@ public class Tower : MonoBehaviour
         }
         bodyCollider = GetComponent<Collider2D>();
         Debug.Assert(uiManager && canvas && bodyCollider, "Wrong initial parameters");
-		if (range != null && rangeImage != null)
-		{
-			// Scale attack radius image
-			rangeImage.transform.localScale = Vector3.one * range.radius;
-		}
     }
 
     /// <summary>

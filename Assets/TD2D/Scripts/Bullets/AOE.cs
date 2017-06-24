@@ -7,17 +7,28 @@ using UnityEngine;
 /// </summary>
 public class AOE : MonoBehaviour
 {
+	// Percent of AOE damage in part of IBullet damage. 0f = 0%, 1f = 100%
+	public float aoeDamageRate = 1f;
     // Area radius
     public float radius = 0.3f;
-    // Damage amount
-    public int damage = 3;
     // Explosion prefab
     public GameObject explosion;
     // Explosion visual duration
     public float explosionDuration = 1f;
 
+	// IBullet component of this gameObject to get the damage amount
+	private IBullet bullet;
     // Scene is closed now. Forbidden to create new objects on destroy
     private bool isQuitting;
+
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
+	void Awake()
+	{
+		bullet = GetComponent<IBullet>();
+		Debug.Assert(bullet != null, "Wrong initial settings");
+	}
 
     /// <summary>
     /// Raises the enable event.
@@ -55,15 +66,12 @@ public class AOE : MonoBehaviour
             Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, radius);
             foreach (Collider2D col in cols)
             {
-                // If collision allowed by scene
-                if (LevelManager.IsCollisionValid(gameObject.tag, col.gameObject.tag) == true)
+                // If target can receive damage
+                DamageTaker damageTaker = col.gameObject.GetComponent<DamageTaker>();
+                if (damageTaker != null)
                 {
-                    // If target can receive damage
-                    DamageTaker damageTaker = col.gameObject.GetComponent<DamageTaker>();
-                    if (damageTaker != null)
-                    {
-                        damageTaker.TakeDamage(damage);
-                    }
+					// Target takes damage equal bullet damage * AOE Damage Rate
+					damageTaker.TakeDamage((int)(Mathf.Ceil(aoeDamageRate * (float)bullet.GetDamage())));
                 }
             }
             if (explosion != null)
