@@ -3,23 +3,24 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlaceTower : MonoBehaviour {
-	[SerializeField]	private GameObject[] torrePrefab = null;
-	[SerializeField]	private GameObject painel = null;
-	[SerializeField]	private GameObject	selector;
+	[SerializeField] private GameObject[] torrePrefab = null;
+	[SerializeField] private GameObject painel = null;
+	//[SerializeField] private GameObject selector;
 	private GameObject torre;
-
+	public Selector seletor;
 	private GameManagerBehaviour gameManager;
 
 	[HideInInspector]	public bool euChamei = false;
 
 	void Awake() {
-		gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();			//o gamemanager vai procurar o gameobject que tiver o componente gamemanagerbehaiour
+		gameManager = FindObjectOfType<GameManagerBehaviour> (); //GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();			//o gamemanager vai procurar o gameobject que tiver o componente gamemanagerbehaiour
+		seletor = FindObjectOfType<Selector>();
 	}
 
 	void OnMouseUp ()	{	//Quando o mouse clicar no espaço
 		GameObject[] places = GameObject.FindGameObjectsWithTag ("Spot");
-		GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
-		Destroy (selectorAux);
+		//GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
+		//Destroy (selectorAux);
 		for(int i = 0; i < places.Length; i++){
 			places [i].GetComponent<PlaceTower> ().euChamei = false;
 		}
@@ -31,8 +32,8 @@ public class PlaceTower : MonoBehaviour {
 		euChamei = true;
 
 		if (euChamei)
-			Instantiate (selector, gameObject.transform.position, Quaternion.identity);
-
+			seletor.ShowOn (gameObject.transform.position);
+			//Instantiate (selector, gameObject.transform.position, Quaternion.identity);
 	}
 
 	public void DesativaTudo(){
@@ -40,8 +41,9 @@ public class PlaceTower : MonoBehaviour {
 	}
 
 	public void ConstruirMelhorarTorre (GameObject tower){
-		GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
-		Destroy (selectorAux);
+		//GameObject selectorAux = GameObject.FindGameObjectWithTag ("Selector");
+		//Destroy (selectorAux);
+		seletor.ShowOn (gameObject.transform.position);
 		DesativaTudo ();
 		BotarTorre (tower);
 	}

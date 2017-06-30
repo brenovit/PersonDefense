@@ -27,7 +27,14 @@ public class UIManager : MonoBehaviour
 
 	void Start ()
 	{
-		
+	}
+
+	void OnEnable(){
+		EventManager.CriarEvento(""
+	}
+
+	void OnDisable(){
+
 	}
 
 	public void AddTropas (int valor)
