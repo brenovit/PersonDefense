@@ -27,14 +27,25 @@ public class UIManager : MonoBehaviour
 
 	void Start ()
 	{
+		
+	}
+
+	void Awake()
+	{
+
 	}
 
 	void OnEnable(){
-		EventManager.CriarEvento(""
+		//EventManager.CriarEvento ("",); 
 	}
 
 	void OnDisable(){
+		//EventManager.RemoverEvento ("");
+	}
 
+	public void SetTropas (int valor)
+	{
+		lblTropas.text = valor.ToString ("0000");
 	}
 
 	public void AddTropas (int valor)
@@ -47,11 +58,6 @@ public class UIManager : MonoBehaviour
 		SetTropas (GetTropas () - valor);
 	}
 
-	public void SetTropas (int valor)
-	{
-		lblTropas.text = valor.ToString ("0000");
-	}
-
 	public int GetTropas ()
 	{
 		int valor;
@@ -59,19 +65,19 @@ public class UIManager : MonoBehaviour
 		return valor;
 	}
 
+	public void SetVida (int valor)
+	{
+		lblVidas.text = valor.ToString ("0000");
+	}
+
 	public void AddVida (int valor)
 	{
-		SetTropas (GetTropas () + valor);
+		SetTropas (GetVida() + valor);
 	}
 
 	public void RemoveVida (int valor)
 	{
-		SetTropas (GetTropas () - valor);
-	}
-
-	public void SetVida (int valor)
-	{
-		lblVidas.text = valor.ToString ("0000");
+		SetTropas (GetVida() - valor);
 	}
 
 	public int GetVida ()
@@ -81,14 +87,14 @@ public class UIManager : MonoBehaviour
 		return valor;
 	}
 
-	public void AddPontos (int valor)
-	{
-		SetPontos (GetPontos () + valor);
-	}
-
 	public void SetPontos (int valor)
 	{
 		lblPontos.text = valor.ToString ("0000");
+	}
+
+	public void AddPontos (int valor)
+	{
+		SetPontos (GetPontos () + valor);
 	}
 
 	public int GetPontos ()
@@ -110,30 +116,42 @@ public class UIManager : MonoBehaviour
 		return valor;
 	}
 
-	public void FimJogo ()
-	{
-		
-	}
-
-	public void PauseGame ()
-	{
-
-	}
-
 	public void BotaoPressionado (GameObject obj, string param)
 	{
 		switch (param) {
-		case "Pausar":
-			PauseGame ();
-			break;
-		case "Sair":		
-			break;
-		case "Voltar":
-			break;
-		case "Reiniciar":
-			break;		
+			case "Pausar":
+				Pausar ();
+				break;
+			case "Voltar":
+				break;
+			case "Sair":		
+				break;
+			case "Reiniciar":
+				break;
+			case "ConfirmarReiniciar":
+				break;
+			case "ConfirmarSair":
+				break;
 		}
 	}
 
+	public void Pausar()
+	{
 
+	}
+
+	public void Sair ()
+	{
+
+	}
+
+	public void Reiniciar ()
+	{
+
+	}
+
+	public void Voltar ()
+	{
+
+	}
 }
