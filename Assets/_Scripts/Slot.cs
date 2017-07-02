@@ -7,7 +7,7 @@ public class Slot : MonoBehaviour {
 	private TowerSelect towerSelect;
 
 	void Start(){
-		towerSelect = GameObject.Find ("SelectTowerPanel").GetComponent<TowerSelect> ();
+		//towerSelect = GameObject.Find ("SelectTowerPanel").GetComponent<TowerSelect> ();
 	}
 
 	public void TrocaImagem(GameObject torreImage){
