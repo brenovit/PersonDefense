@@ -11,7 +11,6 @@ public class MyEvent : UnityEvent<GameObject, string>
 
 public class EventManager : MonoBehaviour
 {
-
 	public static EventManager instancia;
 	private Dictionary<string, MyEvent> eventos = new Dictionary<string,MyEvent> ();
 
@@ -25,6 +24,7 @@ public class EventManager : MonoBehaviour
 		if (instancia == null) {
 			instancia = FindObjectOfType (typeof(EventManager)) as EventManager;
 			if (instancia == null) {
+				Debug.Log ("There is no EventManager");
 				return;
 			}
 		}

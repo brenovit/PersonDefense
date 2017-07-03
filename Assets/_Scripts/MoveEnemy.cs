@@ -39,7 +39,7 @@ public class MoveEnemy : MonoBehaviour {
 				AudioSource audioSource = gameObject.GetComponent <AudioSource> ();			//toca um som
 				AudioSource.PlayClipAtPoint (audioSource.clip, transform.position);
 				GameManagerBehaviour gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerBehaviour> ();	//procura o Objeto no jogo que referencia o GameManager
-				gameManager.vida -= 1;
+				gameManager.Vida -= 1;
 			}
 		}
 	}

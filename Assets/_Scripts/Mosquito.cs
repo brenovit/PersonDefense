@@ -34,7 +34,7 @@ public class Mosquito : MonoBehaviour {
 		AudioSource audioSource = this.gameObject.GetComponent<AudioSource>();			//um som que esta presente no inimgio
 		AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);				//é tocado
 					
-		gameManager.tropas += recompensa;												//o jogador aumenta o dinheiro de ocordo com o valor da remponsa
+		gameManager.Tropas += recompensa;												//o jogador aumenta o dinheiro de ocordo com o valor da remponsa
 		Destroy (gameObject);															//destroi este gameObject
 		if(blood != null)																//se o efeito de sangue não for vazio
 			Instantiate (blood,gameObject.transform.position,Quaternion.identity);		//instancia o efeito

@@ -7,14 +7,50 @@ public class GameManagerBehaviour : MonoBehaviour {
 	public UIManager uimanager;
 	public LevelManager levelmanager;
 
-	public int tropas;												//esta variavel vai difinir o dinheiro do jogador 
-	public int orda;												//esta variavel vai definir a wave atual
-	public int vida;								//variavel que vai receber a vida do jogador
+	[SerializeField]
+	private int tropas;												//esta variavel vai difinir o dinheiro do jogador 
+	[SerializeField]
+	private int orda;												//esta variavel vai definir a wave atual
+	[SerializeField]
+	private int vida;								//variavel que vai receber a vida do jogador
 
 	//public Text healthLabel;										//componente Text responsavel por exibir a vida do jogador
 	public GameObject[] healthIndicator;							//vetor que vai receber os germes que comem o biscoito
 
 	public static int gameState = 0;
+
+	public int Tropas {
+		get {
+			return uimanager.GetTropas();
+		}
+
+		set {
+			tropas = value;
+			uimanager.SetTropas (tropas);
+		}
+	}
+
+	public int Orda {
+		get {
+			return uimanager.GetOrda();
+		}
+
+		set {
+			orda = value;
+			uimanager.SetOrda (orda);
+		}
+	}
+
+	public int Vida {
+		get {
+			return uimanager.GetVida();
+		}
+
+		set {
+			vida = value;
+			uimanager.SetVida (vida);
+		}
+	}
 
 	public void Venceu(){
 		gameState = 2;									//ativa o game over do sistema
@@ -22,18 +58,13 @@ public class GameManagerBehaviour : MonoBehaviour {
 		//gameOverText.GetComponent<Animator> ().SetBool ("gameOver",true);			//inicia a animação do texto de game over
 	}
 
-	void Awake(){
-		UIManager[] uis = Resources.FindObjectsOfTypeAll<UIManager> ();
-		foreach (UIManager ui in uis) {
-			if(ui.CompareTag("UIManager")){
-				uimanager = ui;
-			}
-		}
-		//uimanager = FindObjectOfType<UIManager> ();
-	}
-
-	void Start () {
+	void Start(){
+		uimanager = FindObjectOfType<UIManager> ();
+		if (uimanager == null)
+			Debug.Log ("UIManager didn't find out");
 		Time.timeScale = 1f;
-		orda = 0;
+
+		uimanager.SetTropas (tropas);
+		uimanager.SetVida (vida);
 	}
 }

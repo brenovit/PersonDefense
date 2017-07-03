@@ -49,7 +49,7 @@ public class TowerSelect : MonoBehaviour{
 			GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
 			for (int i = 0; i < spots.Length; i++) {
 				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
-					spots [i].GetComponent<PlaceTower> ().ConstruirMelhorarTorre (torre);
+					//spots [i].GetComponent<PlaceTower> ().ConstruirMelhorarTorre (torre);
 					break;
 				}
 			}
@@ -64,7 +64,7 @@ public class TowerSelect : MonoBehaviour{
 			GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
 			for (int i = 0; i < spots.Length; i++) {
 				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
-					spots [i].GetComponent<PlaceTower> ().Destruir ();
+					//spots [i].GetComponent<PlaceTower> ().Destruir ();
 					break;
 				}
 			}
