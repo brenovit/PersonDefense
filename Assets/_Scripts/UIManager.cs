@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -36,11 +37,11 @@ public class UIManager : MonoBehaviour
 	}
 
 	void OnEnable(){
-		//EventManager.CriarEvento ("",); 
+		EventManager.CriarEvento ("BotaoPressionado",BotaoPressionado); 
 	}
 
 	void OnDisable(){
-		//EventManager.RemoverEvento ("");
+		EventManager.RemoverEvento ("BotaoPressionado",BotaoPressionado);
 	}
 
 	public void SetTropas (int valor)
@@ -122,36 +123,69 @@ public class UIManager : MonoBehaviour
 			case "Pausar":
 				Pausar ();
 				break;
-			case "Voltar":
+		case "Resumir":
+			Resumir ();
 				break;
-			case "Sair":		
+		case "Sair":
+			Sair ();
 				break;
-			case "Reiniciar":
+		case "Reiniciar":
+			Reiniciar ();
 				break;
 			case "ConfirmarReiniciar":
+			ConfirmarReiniciar();
 				break;
 			case "ConfirmarSair":
+			ConfirmarSair();
 				break;
+			case "VoltarConfirmarSair":
+			VoltarConfirmarSair();
+				break;
+			case "VoltarConfirmarReiniciar":
+			VoltarConfirmarReiniciar();
+				break;		
 		}
 	}
 
 	public void Pausar()
 	{
-
+		panelPause.SetActive (true);
+		Time.timeScale = 0;
 	}
 
 	public void Sair ()
 	{
-
+		panelConfirmarSair.SetActive (true);
 	}
 
 	public void Reiniciar ()
 	{
-
+		panelConfirmarReiniciar.SetActive (true);
 	}
 
-	public void Voltar ()
+	public void Resumir ()
 	{
+		panelPause.SetActive (false);
+		Time.timeScale = 1;
+	}
 
+	public void ConfirmarReiniciar ()
+	{
+		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void ConfirmarSair ()
+	{
+		SceneManager.LoadScene (nomeCenaSair);
+	}
+
+	public void VoltarConfirmarSair ()
+	{
+		panelConfirmarSair.SetActive (false);
+	}
+
+	public void VoltarConfirmarReiniciar ()
+	{
+		panelConfirmarReiniciar.SetActive (false);
 	}
 }
