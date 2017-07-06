@@ -17,21 +17,6 @@ public class PlaceTower : MonoBehaviour {
 
 	private PlaceTower[] placesTower;
 
-	[HideInInspector]
-	public bool euChamei = false;
-
-	/*void OnEnable(){
-		EventManager.CriarEvento ("BuildTower", BuildTower);
-		EventManager.CriarEvento ("UpgradeTower", UpgradeTower);
-		EventManager.CriarEvento ("DestroyTower", DestroyTower);
-	}
-
-	void OnDisable(){
-		EventManager.RemoverEvento ("BuildTower",BuildTower);
-		EventManager.RemoverEvento ("UpgradeTower",UpgradeTower);
-		EventManager.RemoverEvento ("DestroyTower", DestroyTower);
-	}*/
-
 	void Start(){
 		placesTower = GameOver.FindObjectsOfType<PlaceTower> ();
 		gameManager = FindObjectOfType<GameManagerBehaviour> (); //o gamemanager vai procurar o gameobject que tiver o componente gamemanagerbehaiour
@@ -43,18 +28,13 @@ public class PlaceTower : MonoBehaviour {
 		}
 	}
 
-	void OnMouseUp ()	{	//Quando o mouse clicar no espaço		
+	public void PushSlot ()	{	//Quando o mouse clicar no espaço		
 		DisableAllTowers();
 		if (tower == null) {
 			ShowTowerBuildTree (buildTreePrefab);
 		} else {
 			ShowTowerUpgradeTree (upgradeTreePrefab);
 		}
-		//euChamei = true;
-
-		//if (euChamei)
-			//seletor.ShowOn (gameObject.transform.position);
-			//Instantiate (selector, gameObject.transform.position, Quaternion.identity);
 	}
 
 	private bool canPlaceTower(TowerData towerData){														//procedimento que vai informar se pode ou não colocar monstro

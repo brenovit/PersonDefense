@@ -48,9 +48,10 @@ public class TowerSelect : MonoBehaviour{
 		if (torre != null) {
 			GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
 			for (int i = 0; i < spots.Length; i++) {
-				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
+				//if (spots [i].GetComponent<PlaceTower> ().euChamei) {
+				if(false){
 					//spots [i].GetComponent<PlaceTower> ().ConstruirMelhorarTorre (torre);
-					break;
+					//break;
 				}
 			}
 			AttCampos ("", 0, 0.0f, 0);
@@ -63,14 +64,15 @@ public class TowerSelect : MonoBehaviour{
 		if (torre != null) {
 			GameObject[] spots = todosSpots.GetComponent<Spots> ().spots;
 			for (int i = 0; i < spots.Length; i++) {
-				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
-					//spots [i].GetComponent<PlaceTower> ().Destruir ();
-					break;
-				}
+//				if (spots [i].GetComponent<PlaceTower> ().euChamei) {
+				//spots [i].GetComponent<PlaceTower> ().Destruir ();
+//					break;
+//				}
 			}
-			this.gameObject.SetActive (false);
-		} else
+//			this.gameObject.SetActive (false);
+		} else {
 			return;
+		}
 	}
 
 	public void MelhorarDestruirTorre (GameObject selectedTorre){

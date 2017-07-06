@@ -12,7 +12,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 	[SerializeField]
 	private int orda;												//esta variavel vai definir a wave atual
 	[SerializeField]
-	private int vida;								//variavel que vai receber a vida do jogador
+	private int vida;												//variavel que vai receber a vida do jogador
 
 	//public Text healthLabel;										//componente Text responsavel por exibir a vida do jogador
 	public GameObject[] healthIndicator;							//vetor que vai receber os germes que comem o biscoito
@@ -23,7 +23,6 @@ public class GameManagerBehaviour : MonoBehaviour {
 		get {
 			return uimanager.GetTropas();
 		}
-
 		set {
 			tropas = value;
 			uimanager.SetTropas (tropas);
@@ -34,7 +33,6 @@ public class GameManagerBehaviour : MonoBehaviour {
 		get {
 			return uimanager.GetOrda();
 		}
-
 		set {
 			orda = value;
 			uimanager.SetOrda (orda);
@@ -45,7 +43,6 @@ public class GameManagerBehaviour : MonoBehaviour {
 		get {
 			return uimanager.GetVida();
 		}
-
 		set {
 			vida = value;
 			uimanager.SetVida (vida);
@@ -63,7 +60,6 @@ public class GameManagerBehaviour : MonoBehaviour {
 		if (uimanager == null)
 			Debug.Log ("UIManager didn't find out");
 		Time.timeScale = 1f;
-
 		uimanager.SetTropas (tropas);
 		uimanager.SetVida (vida);
 	}

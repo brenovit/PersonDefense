@@ -16,9 +16,17 @@ public class SpawnEnemy : MonoBehaviour {
 	public bool	iniciouGame = false;
 	public Button btnStart;
 
+	void OnEnable(){
+		EventManager.CriarEvento ("StartWave",StartWave); 
+	}
+
+	void OnDisable(){
+		EventManager.RemoverEvento ("StartWave",StartWave);
+	}
+
 	void Start () {
 		lastSpawnTime = Time.time;				//tempo para o ultimo
-		gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerBehaviour> ();	
+		gameManager = FindObjectOfType<GameManagerBehaviour> ();
 	}
 	
 	// Update is called once per frame
@@ -54,10 +62,12 @@ public class SpawnEnemy : MonoBehaviour {
 			}
 		} else {															//senão
 			gameManager.Venceu ();
+			iniciouGame = false;
 		}
 	}
 
-	public void StartWave(){
+	public void StartWave(GameObject obj, string param){
 		iniciouGame = true;
 	}
+
 }

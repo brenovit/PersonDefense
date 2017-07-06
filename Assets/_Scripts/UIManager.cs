@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-	//public static UIManager instancia = null;
 	// This scene will loaded after whis level exit
 	public string nomeCenaSair;
 	// Pause menu canvas
@@ -18,23 +17,20 @@ public class UIManager : MonoBehaviour
 	public GameObject panelVitoria;
 	// Level interface
 	public GameObject panelBarraSuperior;
+	// Confirmation restart level canvas
 	public GameObject panelConfirmarReiniciar;
+	// Confirmation Exit level canvas
 	public GameObject panelConfirmarSair;
-	// Avaliable points amount
+	// Avaliable troops, lives, orde and points amount
 	public Text lblTropas;
 	public Text lblOrdar;
 	public Text lblVidas;
 	public Text lblPontos;
 
-	void Start ()
-	{
-		
-	}
+	public GameObject buttonStartWave;
+	public GameObject buttonFastWave;
 
-	void Awake()
-	{
-
-	}
+	private bool gameFast = false;
 
 	void OnEnable(){
 		EventManager.CriarEvento ("BotaoPressionado",BotaoPressionado); 
@@ -123,27 +119,37 @@ public class UIManager : MonoBehaviour
 			case "Pausar":
 				Pausar ();
 				break;
-		case "Resumir":
-			Resumir ();
+			case "Resumir":
+				Resumir ();
 				break;
-		case "Sair":
-			Sair ();
+			case "Sair":
+				Sair ();
 				break;
-		case "Reiniciar":
-			Reiniciar ();
+			case "Reiniciar":
+				Reiniciar ();
 				break;
 			case "ConfirmarReiniciar":
-			ConfirmarReiniciar();
+				ConfirmarReiniciar();
 				break;
 			case "ConfirmarSair":
-			ConfirmarSair();
+				ConfirmarSair();
 				break;
 			case "VoltarConfirmarSair":
-			VoltarConfirmarSair();
+				VoltarConfirmarSair();
 				break;
 			case "VoltarConfirmarReiniciar":
-			VoltarConfirmarReiniciar();
-				break;		
+				VoltarConfirmarReiniciar();
+				break;
+			case "Efeito":
+				break;
+			case "Musica":
+				break;
+			case "StartWave":
+				StartWave ();
+				break;
+			case "AccelerateWave":
+				AccelerateWave ();
+				break;
 		}
 	}
 
@@ -187,5 +193,23 @@ public class UIManager : MonoBehaviour
 	public void VoltarConfirmarReiniciar ()
 	{
 		panelConfirmarReiniciar.SetActive (false);
+	}
+
+	public void StartWave(){
+		ChangeWaveButtonsVisibility ();
+		EventManager.ExecutarEvento ("StartWave", null, "");
+	}
+
+	public void AccelerateWave(){
+		ChangeWaveButtonsVisibility ();
+		gameFast = !gameFast;
+		Time.timeScale = gameFast ? 2f : 1f; 
+	}
+
+	private void ChangeWaveButtonsVisibility(){
+		buttonFastWave.SetActive (buttonStartWave.activeSelf);
+		buttonStartWave.SetActive (buttonFastWave.activeSelf);
+		gameFast = false;
+		Time.timeScale = 1f;
 	}
 }
