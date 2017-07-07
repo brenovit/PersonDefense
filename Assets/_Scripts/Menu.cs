@@ -14,8 +14,9 @@ public class Menu : MonoBehaviour {
 	public Text percentText;
 
     public void AbrirCena(string cena){					//este metodo vai carregar a cena de acordo com o valor passado em parametro pelo inspetor
-		telaCarregando.SetActive (true);
-		StartCoroutine (LevelCoroutine (cena));
+		//telaCarregando.SetActive (true);
+		//StartCoroutine (LevelCoroutine (cena));
+		SceneManager.LoadScene(cena);
     }
 
     public void MeuNumero(int numero)  {						//este metodo contrala os paineis do menu se um ativo os outros 2 apagam

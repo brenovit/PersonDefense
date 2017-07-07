@@ -45,20 +45,28 @@ public class GameManagerBehaviour : MonoBehaviour {
 		}
 		set {
 			vida = value;
-			uimanager.SetVida (vida);
+			if (Vida <= 1) {
+				GameOver ();
+			} else {				
+				uimanager.SetVida (vida);
+			}
 		}
 	}
 
-	public void Venceu(){
-		gameState = 2;									//ativa o game over do sistema
-		//GameObject gameOverText = GameObject.FindGameObjectWithTag ("GameWon");		//procura o objeto com a tag GamoWon
-		//gameOverText.GetComponent<Animator> ().SetBool ("gameOver",true);			//inicia a animação do texto de game over
+	public void GameWon(){
+		EventManager.ExecutarEvento ("GameWon", null, "");
 	}
+
+	public void GameOver(){
+		EventManager.ExecutarEvento ("GameOver", null, "");
+	}
+		
 
 	void Start(){
 		uimanager = FindObjectOfType<UIManager> ();
 		if (uimanager == null)
 			Debug.Log ("UIManager didn't find out");
+		levelmanager = FindObjectOfType<LevelManager> ();
 		Time.timeScale = 1f;
 		uimanager.SetTropas (tropas);
 		uimanager.SetVida (vida);

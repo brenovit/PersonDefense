@@ -12,16 +12,16 @@ public class UIManager : MonoBehaviour
 	// Pause menu canvas
 	public GameObject panelPause;
 	// Defeat menu canvas
-	public GameObject panelDerrota;
+	public GameObject panelGameOver;
 	// Victory menu canvas
-	public GameObject panelVitoria;
+	public GameObject panelGameWon;
 	// Level interface
 	public GameObject panelBarraSuperior;
 	// Confirmation restart level canvas
 	public GameObject panelConfirmarReiniciar;
 	// Confirmation Exit level canvas
 	public GameObject panelConfirmarSair;
-	// Avaliable troops, lives, orde and points amount
+
 	public Text lblTropas;
 	public Text lblOrdar;
 	public Text lblVidas;
@@ -34,10 +34,14 @@ public class UIManager : MonoBehaviour
 
 	void OnEnable(){
 		EventManager.CriarEvento ("BotaoPressionado",BotaoPressionado); 
+		EventManager.CriarEvento ("GameOver",GameOver); 
+		EventManager.CriarEvento ("GameWon",GameWon); 
 	}
 
 	void OnDisable(){
 		EventManager.RemoverEvento ("BotaoPressionado",BotaoPressionado);
+		EventManager.RemoverEvento ("GameOver",GameOver);
+		EventManager.RemoverEvento ("GameWon",GameWon);
 	}
 
 	public void SetTropas (int valor)
@@ -207,9 +211,19 @@ public class UIManager : MonoBehaviour
 	}
 
 	private void ChangeWaveButtonsVisibility(){
-		buttonFastWave.SetActive (buttonStartWave.activeSelf);
-		buttonStartWave.SetActive (buttonFastWave.activeSelf);
+		buttonFastWave.SetActive (!buttonFastWave.activeSelf);
+		buttonStartWave.SetActive (!buttonStartWave.activeSelf);
 		gameFast = false;
 		Time.timeScale = 1f;
+	}
+
+	public void GameOver(GameObject obj, string param){
+		Time.timeScale = 0;
+		panelGameOver.SetActive (true);
+	}
+
+	public void GameWon(GameObject obj, string param){
+		Time.timeScale = 0;
+		panelGameWon.SetActive (true);
 	}
 }

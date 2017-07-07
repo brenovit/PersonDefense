@@ -7,6 +7,7 @@ public class MoveEnemy : MonoBehaviour {
 	private int currentWaypoint = 0;		//armazena o waypoint que o inimigo estiver passando
 	private float lastWaypointSwitchTime;	//armazena o tempo que o inimigo passou por esse waypoint
 	private float speed = 0;				//velocidade do inimigo
+	private GameManagerBehaviour gameManager;
 
 	public float Speed{
 		get {return speed;}
@@ -14,6 +15,8 @@ public class MoveEnemy : MonoBehaviour {
 	}
 
 	void Start () {
+		gameManager = FindObjectOfType<GameManagerBehaviour> ();
+
 		lastWaypointSwitchTime = Time.time;	//define que esta variavel vai recerbe um tempo.
 		if (speed == 0)
 			speed = 2;
@@ -38,7 +41,6 @@ public class MoveEnemy : MonoBehaviour {
 				Destroy (gameObject);														//destroi o game object
 				AudioSource audioSource = gameObject.GetComponent <AudioSource> ();			//toca um som
 				AudioSource.PlayClipAtPoint (audioSource.clip, transform.position);
-				GameManagerBehaviour gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerBehaviour> ();	//procura o Objeto no jogo que referencia o GameManager
 				gameManager.Vida -= 1;
 			}
 		}

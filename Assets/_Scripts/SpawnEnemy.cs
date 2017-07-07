@@ -61,7 +61,7 @@ public class SpawnEnemy : MonoBehaviour {
 				iniciouGame = false;
 			}
 		} else {															//senão
-			gameManager.Venceu ();
+			gameManager.GameWon ();
 			iniciouGame = false;
 		}
 	}
