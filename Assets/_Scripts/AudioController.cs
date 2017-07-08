@@ -1,43 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class AudioController : MonoBehaviour {
+using System.Collections.Generic;
 
-	//public	Slider volumeSlider;								//controlador de audio(não funcionando)
-	//public Text volumeIndicator;
-	//private float volume = 0f;
+[System.Serializable]
+public class PlayAudio {
+	public string audioName;
+	public AudioClip audioClip;
+}
+
+public class AudioController : MonoBehaviour {
+	
+	public AudioSource musicAudioSource;
+	public AudioSource effectAudioSource;
+
+	[SerializeField]
+	public List<PlayAudio> playAudioList;
 
 	private bool musicMute = false;
 	private bool effectMute = false;
+	private float musicVolume = 1;
+	private float effectVolume = 1;
 
 	void OnEnable(){
 		EventManager.CriarEvento ("MuteMusic", MuteMusic);
 		EventManager.CriarEvento ("MuteEffect", MuteEffect);
+		EventManager.CriarEvento ("PlaySound", PlaySound);
 	}
 
 	void OnDisable(){
 		EventManager.RemoverEvento ("MuteMusic", MuteMusic);
 		EventManager.RemoverEvento ("MuteEffect", MuteEffect);
+		EventManager.RemoverEvento ("PlaySound", PlaySound);
 	}
 
-	/*void Start(){
-		volumeSlider.value = AudioListener.volume;
-		volume = volumeSlider.value * 100;
-		volumeIndicator.text = "Volume\n"+volume.ToString ("#")+"%";
+	/// <summary>
+	/// Plaies the sound.
+	/// </summary>
+	/// <param name="audio">Audio clip object</param>
+	/// <param name="param">The volume of the audio will play. (0-1)f</param>
+	public void PlaySound(GameObject obj, string audioName){
+		print ("play: " + audioName);
+		foreach (PlayAudio pa in playAudioList) {
+			if(audioName.Equals(pa.audioName)){
+				effectAudioSource.PlayOneShot (pa.audioClip);
+			}
+		}
+		//float volume = string.IsNullOrEmpty (param) ? 0f : float.Parse
+		//if ( && effectMute == false) {
+		//}
 	}
-
-	public void VolumeMusica(){		
-		AudioListener.volume = volumeSlider.value;
-		volume = volumeSlider.value * 100;
-		volumeIndicator.text = "Volume\n"+volume.ToString ("#")+"%";
-    }*/
 
 	public void MuteMusic(GameObject obj, string param){
+		musicVolume = musicVolume == 1f ? 0f : 1f;
 		//deixar todas as musicas mudas, salvar em memoria
+		musicAudioSource.volume = musicVolume;
 	}
 
 	public void MuteEffect(GameObject obj, string param){
 		//deixar todos os efeitos mudos. salvar em memoria
+		effectVolume = effectVolume == 1f ? 0f : 1f;
+		effectAudioSource.volume = effectVolume;
 	}
 
+	public void PlayAudio(AudioClip audio){
+		effectAudioSource.PlayOneShot (audio);
+	}
 }

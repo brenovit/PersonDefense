@@ -13,20 +13,18 @@ public class BuildTree : MonoBehaviour {
 		placeTower = placeObj;
 	}
 
-	public PlaceTower GetPlaceTower(){		
+	public PlaceTower GetPlaceTower(){
 		return placeTower;
 	}
 
 	public void UpgradeTower(){
-		//EventManager.ExecutarEvento ("UpgradeTower", null,"");
-		placeTower.UpgradeTower();
-		placeTower = null;
+		this.placeTower.UpgradeTower();
+		this.placeTower = null;
 	}
 
 	public void DestroyTower(){
-		//EventManager.ExecutarEvento ("DestroyTower", null,"");
-		placeTower.DestroyTower();
-		placeTower = null;
+		this.placeTower.DestroyTower();
+		this.placeTower = null;
 	}
 
 	public void SetTower(GameObject tower){		

@@ -18,6 +18,7 @@ public class GameManagerBehaviour : MonoBehaviour {
 	public GameObject[] healthIndicator;							//vetor que vai receber os germes que comem o biscoito
 
 	public static int gameState = 0;
+	private PlaceTower[] placesTower;
 
 	public int Tropas {
 		get {
@@ -64,11 +65,24 @@ public class GameManagerBehaviour : MonoBehaviour {
 
 	void Start(){
 		uimanager = FindObjectOfType<UIManager> ();
+
 		if (uimanager == null)
 			Debug.Log ("UIManager didn't find out");
+		
 		levelmanager = FindObjectOfType<LevelManager> ();
-		Time.timeScale = 1f;
+
 		uimanager.SetTropas (tropas);
 		uimanager.SetVida (vida);
+
+		placesTower = FindObjectsOfType<PlaceTower> ();
+		Debug.Log("Founded "+placesTower.Length+" places tower");
+
+		Time.timeScale = 1f;
+	}
+
+	public void DisableAllTowers(){
+		foreach (var item in placesTower) {
+			item.CloseTowerBuildTree ();			
+		}
 	}
 }

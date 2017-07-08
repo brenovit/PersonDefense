@@ -122,38 +122,40 @@ public class UIManager : MonoBehaviour
 		switch (param) {
 			case "Pausar":
 				Pausar ();
-				break;
+			break;
 			case "Resumir":
 				Resumir ();
-				break;
+			break;
 			case "Sair":
 				Sair ();
-				break;
+			break;
 			case "Reiniciar":
 				Reiniciar ();
-				break;
+			break;
 			case "ConfirmarReiniciar":
 				ConfirmarReiniciar();
-				break;
+			break;
 			case "ConfirmarSair":
 				ConfirmarSair();
-				break;
+			break;
 			case "VoltarConfirmarSair":
 				VoltarConfirmarSair();
-				break;
+			break;
 			case "VoltarConfirmarReiniciar":
 				VoltarConfirmarReiniciar();
-				break;
+			break;
 			case "Efeito":
-				break;
+				Efeito ();
+			break;
 			case "Musica":
-				break;
+				Musica ();
+			break;
 			case "StartWave":
 				StartWave ();
-				break;
+			break;
 			case "AccelerateWave":
 				AccelerateWave ();
-				break;
+			break;
 		}
 	}
 
@@ -197,6 +199,14 @@ public class UIManager : MonoBehaviour
 	public void VoltarConfirmarReiniciar ()
 	{
 		panelConfirmarReiniciar.SetActive (false);
+	}
+
+	public void Efeito(){
+		EventManager.ExecutarEvento ("MuteEffect", null, "");
+	}
+
+	public void Musica(){
+		EventManager.ExecutarEvento ("MuteMusic", null, "");
 	}
 
 	public void StartWave(){

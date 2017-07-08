@@ -28,8 +28,9 @@ public class PlaceTower : MonoBehaviour {
 		}
 	}
 
-	public void PushSlot ()	{	//Quando o mouse clicar no espaço		
+	public void PushSlot ()	{	//Quando o mouse clicar no espaço
 		DisableAllTowers();
+		EventManager.ExecutarEvento ("PlaySound", null, "Slot");
 		if (tower == null) {
 			ShowTowerBuildTree (buildTreePrefab);
 		} else {
@@ -70,16 +71,9 @@ public class PlaceTower : MonoBehaviour {
 		}
 	}
 
-
-	private void CloseTowerBuildTree(){
+	public void CloseTowerBuildTree(){
 		if (activeBuildTree != null) {
 			Destroy (activeBuildTree);
-		}
-	}
-
-	private void DisableAllTowers(){
-		for (int i = 0; i < placesTower.Length; i++) {
-			placesTower [i].CloseTowerBuildTree ();
 		}
 	}
 
@@ -88,8 +82,6 @@ public class PlaceTower : MonoBehaviour {
 			TowerData td = pTower.GetComponent<TowerData> ();
 			if(td != null && canPlaceTower (td)) {																		//se puder botar monstro
 				tower = (GameObject)Instantiate (pTower, transform.position, Quaternion.identity); 			//instancia o monstro definido no mosterprefab, no pasição e rotação do gameobject atual(slot)
-				AudioSource audiosource = gameObject.GetComponent<AudioSource> (); 							//define uma variavel para o audio
-				audiosource.PlayOneShot (audiosource.clip);													//toca o som de botar item
 				gameManager.Tropas -= tower.GetComponent <TowerData> ().CurrentLevel.tropas;				//acessa a carteira do jogador e reduz o seu dinheiro, de acordo com o custo de compra do monstro.
 			}
 		}
@@ -99,8 +91,6 @@ public class PlaceTower : MonoBehaviour {
 	public void UpgradeTower(){
 		if(canUpgradeTower ()) {																	//se ja tiver mosntro, verifica se pode evoluir
 			tower.GetComponent <TowerData>().increaseLevel ();											//para o monstro atual, execulta o procedimento de incrementar o level
-			AudioSource audiosource = gameObject.GetComponent<AudioSource> (); 							//define uma variavel para tratar o audio
-			audiosource.PlayOneShot (audiosource.clip);													//toca o som de botar item
 			gameManager.Tropas -= tower.GetComponent <TowerData> ().CurrentLevel.tropas;				//acessa a carteira do jogador e reduz o seu dinheiro, de acordo com o custo de melhoria do monstro.
 		}
 		DisableAllTowers();
@@ -114,6 +104,12 @@ public class PlaceTower : MonoBehaviour {
 			Destroy (this.tower.gameObject);
 			this.tower = null;
 			DisableAllTowers();
+		}
+	}
+
+	private void DisableAllTowers(){
+		for (int i = 0; i < placesTower.Length; i++) {
+			placesTower [i].CloseTowerBuildTree ();
 		}
 	}
 }
