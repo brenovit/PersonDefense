@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;										//usar lista
+using UnityEngine.UI;
 
 [System.Serializable]													//permite que as variaveis abaixo possam ser alteradas pelo editor
 public class TowerLevel {												//esta clase define que cada mosntro ao ser atualizado tera um custo e uma aparencia.
-	public GameObject visualizacao;										//aparencia do monstro
 	public float cadencia;												//cadencia de tiro
 	public int dano;
 	public float campoVisao;											//Campo de visão da torre
@@ -13,10 +13,14 @@ public class TowerLevel {												//esta clase define que cada mosntro ao ser
 }
 
 public class TowerData : MonoBehaviour {								//classe de dados do monstro
+
 	public string nome;
 	public GameObject bala;												//bala que o monstro vai atirar
-	[SerializeField]private CircleCollider2D raio;						//Collider que vai especificar o campo de visão da torre
+	public Sprite icon;
+	[SerializeField]
+	private CircleCollider2D raio;						//Collider que vai especificar o campo de visão da torre
 	public List<TowerLevel> levels;										//cria uma lista para os levels dos monstros
+
 	private TowerLevel currentLevel;									//cria uma variavel que vai tratar o level atual do mosntro
 
 	public TowerLevel CurrentLevel {									//criamos um comportamento para retornar ou definir um level para o monstro
@@ -27,7 +31,7 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 			currentLevel = value;										//definir um valor para o level atual
 			int currentLevelIndex = levels.IndexOf (currentLevel);		//variavel que vai receber o valor do indice do level atual do monstro
 
-			GameObject levelVizualizationn = 							//este gameobject vai ter sua aparecia alterada pela
+			/*GameObject levelVizualizationn = 							//este gameobject vai ter sua aparecia alterada pela
 							levels [currentLevelIndex].visualizacao;	//a aparencia que esta definida no atributo da classe de levels do monstro
 			for(int i = 0; i < levels.Count; i++){						//laço que vai até o ultimo level definido (item da lista)
 				if(levelVizualizationn != null) {						//se o gameobject de aparece não estiver vazio
@@ -37,7 +41,7 @@ public class TowerData : MonoBehaviour {								//classe de dados do monstro
 						levels [i].visualizacao.SetActive (false);		//o item da lista na posição 'i', tera sua aparecia desativada, 
 					}
 				}
-			}
+			}*/
 		}
 	}
 

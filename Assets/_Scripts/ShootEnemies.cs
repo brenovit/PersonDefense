@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class ShootEnemies : MonoBehaviour {
 	private float lastShotTime;													//este atributo vai receber o tempo do ultimo tiro feito
 	private TowerData towerData;												//este atributo vai receber os dados do monstro(torre)
-	[SerializeField]	private List<GameObject> enemiesInRange;										//lista contendo os inimigos no perimetro
+	[SerializeField]
+	private List<GameObject> enemiesInRange;				//lista contendo os inimigos no perimetro
 
 	void Start () {
 		enemiesInRange = new List<GameObject> ();								//instancia a lista
@@ -31,12 +32,12 @@ public class ShootEnemies : MonoBehaviour {
 				lastShotTime = Time.time;										//o tempo do ultimo tiro receber o segundo atual
 			}
 
-			GameObject view = towerData.CurrentLevel.visualizacao;
+			Transform muzzle = towerData.CurrentLevel.muzzle;
 			Vector3 direction = 												//cria-se um vector3d que vai passar a direção da bala
-				view.transform.position - target.transform.position;			//recebendo a posição atual do monstro menos a posição do inimigo
-			view.transform.rotation = Quaternion.AngleAxis (					//esta torre vai rotacionar num angulo fixo
-				Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,		//levando em conta o valor da tangente em considerção os eixos das ordenadas e das abscissas vezes 180 dividido por PI em graus graus 
-				new Vector3 (0, 0, 1)); 										//em um ponto fixo
+			muzzle.position - target.transform.position;						//recebendo a posição atual do monstro menos a posição do inimigo
+			muzzle.rotation = Quaternion.AngleAxis (							//esta torre vai rotacionar num angulo fixo
+			Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,			//levando em conta o valor da tangente em considerção os eixos das ordenadas e das abscissas vezes 180 dividido por PI em graus graus 
+			new Vector3 (0, 0, 1)); 											//em um ponto fixo
 		}
 	}
 
@@ -69,9 +70,9 @@ public class ShootEnemies : MonoBehaviour {
 		startPosition.z = bulletPrefab.transform.position.z;					//a posição no eixo z da posição inicial vai ser igual a posição em z da bala
 		targetPosition.z = bulletPrefab.transform.position.z;					//a posição no eixo Z do alvo vai receber a posição em z da bala
 
-		GameObject newBullet = (GameObject)Instantiate (bulletPrefab);			//instanciando uma nova bala como um GameObject
+		GameObject newBullet = (GameObject)Instantiate (bulletPrefab, startPosition,Quaternion.identity);			//instanciando uma nova bala como um GameObject
 
-		newBullet.transform.position = startPosition;							//a posição da bala vai ser igual a posição inicial do monstro
+		//newBullet.transform.position = startPosition;							//a posição da bala vai ser igual a posição inicial do monstro
 		BulletBehavior bulletComp = newBullet.GetComponent<BulletBehavior> ();	//Cria-se um objeto do tipo comportamento da bala que vai receber a nova bala pegando o componente BulletBehavior
 		bulletComp.alvo = target.gameObject;									//este objeto de comportamento da bala em seu atributo de alvo vai receber o gameObject target e
 		bulletComp.posicaoInicial = startPosition;								//em seu atributo de posição inicial vai receber a variavel startPosition

@@ -23,11 +23,11 @@ public class BulletBehavior : MonoBehaviour {
 	void Start () {
 		tempoInicio = Time.time;											//a variavel tempoInicio vai receber o tempo de inicio da bala
 		distancia = Vector3.Distance (posicaoInicial, posicaoAlvo);			//esta variavel vai receber a distancia entre a posição inicial da bala e do alvo
-		GameObject gm = GameObject.FindGameObjectWithTag("GameManager");	//estou criando uma variavel do tipo GameObject e mandando ela procurar em jogo o objeto que tiver o nome "GameManager"
-		gameManager = gm.GetComponent<GameManagerBehaviour>();				//o objeto gameManager vai receber o GameObject gm, passando o seu componente GameManagerBehaviour
+		gameManager = FindObjectOfType<GameManagerBehaviour>();				//o objeto gameManager vai receber o GameObject gm, passando o seu componente GameManagerBehaviour
 	}
 
 	void Update () {
+
 		float intervaloTempo = Time.time - tempoInicio;						//instavelo de tempo para a proxima bala sair
 		gameObject.transform.position = 									//a posição da bala vai ser alterada de acordo com a 
 			Vector3.Lerp(posicaoInicial, posicaoAlvo, 						//interpolação linear entre dois pontosl evando em consideração o tempo, 

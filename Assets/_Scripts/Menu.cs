@@ -9,13 +9,8 @@ public class Menu : MonoBehaviour {
     public GameObject panelOpcoes;
 	public GameObject panelMenu;
 	public GameObject panelSelecao;
-	public GameObject telaCarregando;
-	public Image loadBar;
-	public Text percentText;
 
     public void AbrirCena(string cena){					//este metodo vai carregar a cena de acordo com o valor passado em parametro pelo inspetor
-		//telaCarregando.SetActive (true);
-		//StartCoroutine (LevelCoroutine (cena));
 		SceneManager.LoadScene(cena);
     }
 
@@ -46,12 +41,4 @@ public class Menu : MonoBehaviour {
         Application.Quit();										//fechar o jogo
     }
 
-    IEnumerator LevelCoroutine(string cena){
-		AsyncOperation async = SceneManager.LoadSceneAsync (cena);	//Carrega a cena, de forma unica, isto é, deleta as outras cenas.
-		while(!async.isDone){
-			loadBar.fillAmount = async.progress / 0.9f;
-			percentText.text = loadBar.fillAmount * 100 + "%";
-			yield return null;
-		}
-    }
 }

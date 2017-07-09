@@ -20,7 +20,7 @@ public class Slot : MonoBehaviour {
 		if (icon != null) {
 			//define o icone do botão de construir para a imagem da torre
 			//TrocaImagem()
-			icon.sprite = torre.GetComponent<TowerData> ().levels[0].visualizacao.GetComponent<SpriteRenderer> ().sprite;
+			icon.sprite = torre.GetComponent<TowerData> ().icon;
 			//TowerData td = torre.GetComponent<TowerData> ();
 			//GameObject aux = td.levels[0].visualizacao;
 			//Sprite view = aux.GetComponent<SpriteRenderer> ().sprite;

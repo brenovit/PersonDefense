@@ -17,8 +17,6 @@ public class AudioController : MonoBehaviour {
 	[SerializeField]
 	public List<PlayAudio> playAudioList;
 
-	private bool musicMute = false;
-	private bool effectMute = false;
 	private float musicVolume = 1;
 	private float effectVolume = 1;
 
@@ -40,7 +38,6 @@ public class AudioController : MonoBehaviour {
 	/// <param name="audio">Audio clip object</param>
 	/// <param name="param">The volume of the audio will play. (0-1)f</param>
 	public void PlaySound(GameObject obj, string audioName){
-		print ("play: " + audioName);
 		foreach (PlayAudio pa in playAudioList) {
 			if(audioName.Equals(pa.audioName)){
 				effectAudioSource.PlayOneShot (pa.audioClip);
@@ -52,8 +49,8 @@ public class AudioController : MonoBehaviour {
 	}
 
 	public void MuteMusic(GameObject obj, string param){
-		musicVolume = musicVolume == 1f ? 0f : 1f;
 		//deixar todas as musicas mudas, salvar em memoria
+		musicVolume = musicVolume == 1f ? 0f : 1f;
 		musicAudioSource.volume = musicVolume;
 	}
 

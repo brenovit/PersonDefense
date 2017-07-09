@@ -14,7 +14,6 @@ public class SpawnEnemy : MonoBehaviour {
 
 	public GameObject[] waypoints;				//vetor que vai conter todos os wayspoints do mapa			
 	public bool	iniciouGame = false;
-	public Button btnStart;
 
 	void OnEnable(){
 		EventManager.CriarEvento ("StartWave",StartWave); 
@@ -34,8 +33,6 @@ public class SpawnEnemy : MonoBehaviour {
 		if (iniciouGame) {
 			StartSpawn ();
 		}
-		//verificar se é para rodar o jogo
-		//verificar se o jogo acabou
 	}
 
 	private void StartSpawn(){
@@ -48,7 +45,7 @@ public class SpawnEnemy : MonoBehaviour {
 			enemiesSpawned < orda[currentWave].maxEnemies){					//a quantidade de inimigos spawnados for menor do que a quantidade maxima de inimigos que tem de ser spawnada na onda atual
 				lastSpawnTime = Time.time;									//o tempo do utlimo spawn recebe um sistema de tempo em segundos.
 				GameObject newEnemy = 
-				(GameObject)Instantiate (orda [currentWave].enemyPrefab);	//Cria-se um novo game object recebendo a instancia  do prefab de inimigo definido na onda.
+					(GameObject)Instantiate (orda [currentWave].enemyPrefab,waypoints[0].transform.position,Quaternion.identity);	//Cria-se um novo game object recebendo a instancia  do prefab de inimigo definido na onda.
 				newEnemy.GetComponent<MoveEnemy>().waypoints = waypoints;	//este gameobject vai preencher seu vetor de wayspoints com os waispoints definidos nesta classe.
 				enemiesSpawned++;											//a quantidade de inimigos spawnados auamenta
 			}
