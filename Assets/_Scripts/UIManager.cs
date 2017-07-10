@@ -32,6 +32,12 @@ public class UIManager : MonoBehaviour
 
 	private bool gameFast = false;
 
+	public bool GameFast{
+		get {
+			return gameFast;
+		}
+	}
+
 	void OnEnable(){
 		EventManager.CriarEvento ("BotaoPressionado",BotaoPressionado); 
 		EventManager.CriarEvento ("GameOver",GameOver); 
@@ -220,7 +226,7 @@ public class UIManager : MonoBehaviour
 		Time.timeScale = gameFast ? 2f : 1f; 
 	}
 
-	private void ChangeWaveButtonsVisibility(){
+	public void ChangeWaveButtonsVisibility(){
 		buttonFastWave.SetActive (!buttonFastWave.activeSelf);
 		buttonStartWave.SetActive (!buttonStartWave.activeSelf);
 		gameFast = false;

@@ -85,4 +85,9 @@ public class GameManagerBehaviour : MonoBehaviour {
 			item.CloseTowerBuildTree ();			
 		}
 	}
+
+	public void ChangeToPlay(){
+		if (!uimanager.GameFast)
+			uimanager.ChangeWaveButtonsVisibility();
+	}
 }

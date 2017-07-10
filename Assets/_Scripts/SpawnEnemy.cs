@@ -56,6 +56,7 @@ public class SpawnEnemy : MonoBehaviour {
 				enemiesSpawned = 0;											//a variavel que conta os inimigos spawnados vai ser igual a 0
 				lastSpawnTime = Time.time;									//o tempo do ultimo spawn ser igual ao presente momento.
 				iniciouGame = false;
+				//gameManager.ChangeToPlay ();
 			}
 		} else {															//senão
 			gameManager.GameWon ();
