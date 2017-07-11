@@ -51,6 +51,9 @@ public class ShootEnemies : MonoBehaviour {
 			EnemyDestructionDelegate del = 										//em seguida a variavel del que é um do tipo de um delegate recebe o  
 				other.gameObject.GetComponent<EnemyDestructionDelegate> ();		//GameObject que tiver o componente EnemuDestructionDelegate
 			del.enemyDelegate += OnEnemyDestroy;								//o del chama o ponteiro do delgate inserindo o metodo a qual ele referencia
+			//SpriteRenderer spriteEnemy = other.gameObject.GetComponentInChildren<SpriteRenderer>();
+			//spriteEnemy.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteEnemy.bounds.min).y * -1;
+		
 		}
 	}
 

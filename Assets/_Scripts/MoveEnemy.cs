@@ -8,6 +8,7 @@ public class MoveEnemy : MonoBehaviour {
 	private float lastWaypointSwitchTime;	//armazena o tempo que o inimigo passou por esse waypoint
 	private float speed = 0;				//velocidade do inimigo
 	private GameManagerBehaviour gameManager;
+	//public SpriteRenderer sprite;
 
 	public float Speed{
 		get {return speed;}
@@ -22,9 +23,11 @@ public class MoveEnemy : MonoBehaviour {
 			speed = 2;
 	}
 
-	void Update () {
+	void Update () {		
 		Vector3 startPosition = waypoints [currentWaypoint].transform.position;				//defini a posição inicial do inimigo de acordo com a posição do WP que estiver na primeira posição do vetor 
 		Vector3 endPosition = waypoints [currentWaypoint + 1].transform.position;			//defini a posição final do inimigo de acordo com a posição do WP que estiver na proxima posição posição do vetor 
+
+		//sprite.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteEnemy.bounds.min).y * -1;
 
 		float pathLength = Vector3.Distance (startPosition, endPosition);					//armazena a distancia etnre os dois pontos atuais, usando um procediemtno do vector3, chamado distance
 		float totalTimeForPath = pathLength / speed;										//armazena o tempo total para fazer o percurso, usando a formula, tempo = distancia / velocida
@@ -34,7 +37,7 @@ public class MoveEnemy : MonoBehaviour {
 
 		if(gameObject.transform.position.Equals (endPosition)){								//se a posição atual do inimigo for igual a ultima posição do waypoint
 			if (currentWaypoint < waypoints.Length - 2){									//verifica se o waypoint atual é menor que a qauntidade de wayspoints -2
-				NovaRotacao ();
+				//NovaRotacao ();
 				currentWaypoint++;															//se for verdade a posição do waypoint atual é incrementada
 				lastWaypointSwitchTime = Time.time;											//o tempo do ultimo way point é alterado de acordo com o tempo atual
 			} else {																		//se não for
