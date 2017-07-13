@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
 
 	public void SetVida (int valor)
 	{
-		lblVidas.text = valor.ToString ("0000");
+		lblVidas.text = valor.ToString ("00");
 	}
 
 	public void AddVida (int valor)
@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
 
 	public void SetOrda (int valor)
 	{
-		lblOrdar.text = valor.ToString ("0000");
+		lblOrdar.text = valor.ToString ("00");
 	}
 
 	public int GetOrda ()
